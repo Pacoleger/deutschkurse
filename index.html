@@ -4,32 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BOPI – Deutschkurse online</title>
-<meta name="description" content="BOPI Sprachschule: Deutsch lernen online für Erwachsene, Schülerinnen und Schüler und Geflüchtete. A1 bis C2 mit Abschlusstests und Zertifikaten.">
+<meta name="description" content="BOPI Sprachschule: Deutsch lernen online für Erwachsene, Schülerinnen und Schüler und Geflüchtete.">
 <style>
-:root{
---tinte:#1b2a41;
---papier:#f5f7fa;
---sonne:#ffc83d;
---meer:#1f7a8c;
---weiss:#fff;
---linie:#d5dce5;
---text-gedaempft:#4a5a70;
-}
+:root{--tinte:#1b2a41;--papier:#f5f7fa;--sonne:#ffc83d;--meer:#1f7a8c;--weiss:#fff;--linie:#d5dce5;--text-gedaempft:#4a5a70;}
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{
-margin:0;
-background:var(--papier);
-color:var(--tinte);
-font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
-font-size:1.0625rem;
-line-height:1.6;
-}
+body{margin:0;background:var(--papier);color:var(--tinte);font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;font-size:1.0625rem;line-height:1.6;}
 a{color:var(--meer);}
-a:focus-visible,.btn:focus-visible,button:focus-visible{outline:3px solid var(--tinte);outline-offset:3px;}
 .wrap{max-width:1060px;margin:0 auto;padding:0 1.25rem;}
-
-/* Kopfbereich */
 header{padding:1.25rem 0;background:white;border-bottom:1px solid var(--linie);}
 header .wrap{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;}
 .marke{font-weight:900;font-size:1.4rem;text-decoration:none;color:var(--meer);letter-spacing:2px;}
@@ -39,29 +21,14 @@ header .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 nav{display:flex;gap:1.5rem;flex-wrap:wrap;}
 nav a{color:var(--tinte);text-decoration:none;font-weight:600;font-size:0.95rem;}
 nav a:hover{text-decoration:underline;}
-
-/* Sprachauswahl */
 .sprachen{display:flex;gap:0.4rem;flex-wrap:wrap;}
-.sprachen button{
-font:inherit;font-size:0.85rem;cursor:pointer;
-padding:0.3rem 0.8rem;border-radius:999px;
-border:2px solid var(--linie);background:var(--weiss);color:var(--tinte);
-transition:all 0.15s;
-}
+.sprachen button{font:inherit;font-size:0.85rem;cursor:pointer;padding:0.3rem 0.8rem;border-radius:999px;border:2px solid var(--linie);background:var(--weiss);color:var(--tinte);}
 .sprachen button:hover{border-color:var(--tinte);}
-.sprachen button[aria-pressed="true"]{
-background:var(--sonne);border-color:var(--tinte);font-weight:700;
-}
-
-/* Hero */
+.sprachen button[aria-pressed="true"]{background:var(--sonne);border-color:var(--tinte);font-weight:700;}
 .hero{padding:3rem 0;background:linear-gradient(135deg,var(--meer) 0%,#0f5a6b 100%);color:white;}
-.hero h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;letter-spacing:-0.02em;margin:0 0 1rem;color:white;}
+.hero h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;margin:0 0 1rem;color:white;}
 .hero p.lead{font-size:1.15rem;max-width:42em;margin:0 0 2rem;opacity:0.95;}
-.btn{
-display:inline-block;padding:0.7rem 1.3rem;border-radius:999px;font-weight:700;
-text-decoration:none;border:2px solid transparent;cursor:pointer;font-size:0.95rem;
-font-family:inherit;
-}
+.btn{display:inline-block;padding:0.7rem 1.3rem;border-radius:999px;font-weight:700;text-decoration:none;border:2px solid transparent;cursor:pointer;font-size:0.95rem;font-family:inherit;}
 .btn-voll{background:var(--tinte);color:var(--weiss);}
 .btn-voll:hover{background:#0f1a2b;}
 .btn-sonne{background:var(--sonne);color:var(--tinte);}
@@ -69,36 +36,17 @@ font-family:inherit;
 .btn-leer{background:transparent;color:var(--tinte);border-color:var(--tinte);}
 .btn-leer:hover{background:var(--weiss);}
 .hero .btn-leer{color:white;border-color:white;}
-.hero .btn-leer:hover{background:rgba(255,255,255,0.15);}
-
-/* Abschnitte */
 section{padding:3rem 0;}
 section.hell{background:var(--weiss);}
-h2{font-size:clamp(1.5rem,3.2vw,2rem);margin:0 0 0.5rem;letter-spacing:-0.01em;}
+h2{font-size:clamp(1.5rem,3.2vw,2rem);margin:0 0 0.5rem;}
 .section-untertitel{color:var(--text-gedaempft);max-width:44em;margin:0 0 2rem;}
-
-/* Niveau-Blöcke */
-.niveau-block{
-background:white;border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;
-box-shadow:0 4px 15px rgba(0,0,0,.06);border:1px solid var(--linie);
-}
-.niveau-kopf{
-display:flex;justify-content:space-between;align-items:center;
-flex-wrap:wrap;gap:1rem;margin-bottom:1rem;
-}
+.niveau-block{background:white;border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:0 4px 15px rgba(0,0,0,.06);border:1px solid var(--linie);}
+.niveau-kopf{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1rem;}
 .niveau-titel{display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;}
-.niveau-badge{
-background:var(--tinte);color:white;font-weight:800;
-padding:0.4rem 0.9rem;border-radius:8px;font-size:1.1rem;
-}
+.niveau-badge{background:var(--tinte);color:white;font-weight:800;padding:0.4rem 0.9rem;border-radius:8px;font-size:1.1rem;}
 .niveau-beschreibung{color:var(--text-gedaempft);font-size:0.95rem;}
 .test-reihe{display:flex;flex-wrap:wrap;gap:0.7rem;margin-bottom:1rem;}
-.test-link{
-display:inline-block;padding:0.6rem 1.1rem;border-radius:10px;
-text-decoration:none;font-weight:600;font-size:0.95rem;
-border:2px solid var(--meer);color:var(--meer);background:white;
-transition:all 0.15s;
-}
+.test-link{display:inline-block;padding:0.6rem 1.1rem;border-radius:10px;text-decoration:none;font-weight:600;font-size:0.95rem;border:2px solid var(--meer);color:var(--meer);background:white;}
 .test-link:hover{background:var(--meer);color:white;}
 .test-link.gesperrt{border-color:var(--linie);color:#b0b8c4;cursor:not-allowed;}
 .test-link.gesperrt::after{content:" 🔒";font-size:0.85rem;}
@@ -106,88 +54,30 @@ transition:all 0.15s;
 .test-link.freigeschaltet::after{content:" ✓";font-weight:bold;}
 .test-link.erst-test{border-color:var(--sonne);background:var(--sonne);color:var(--tinte);}
 .test-link.erst-test:hover{background:#ffd666;border-color:#ffd666;}
-
-.hinweis-box{
-margin-top:0.5rem;padding:0.8rem 1rem;
-background:#fff8e1;border-left:4px solid var(--sonne);
-border-radius:8px;font-size:0.92rem;
-}
+.hinweis-box{margin-top:0.5rem;padding:0.8rem 1rem;background:#fff8e1;border-left:4px solid var(--sonne);border-radius:8px;font-size:0.92rem;}
 .hinweis-box.gruen{background:#e8f5e9;border-left-color:green;}
-.hinweis-box button{
-background:var(--tinte);color:white;border:none;
-padding:0.5rem 1rem;border-radius:8px;cursor:pointer;
-font-weight:600;font-size:0.9rem;margin-left:0.5rem;
-}
-.hinweis-box button:hover{background:#0f1a2b;}
-
-/* Zertifikat-Bereich */
-.zertifikat-bereich{
-margin-top:1rem;padding:1rem;background:#f0f4ff;
-border:2px dashed var(--meer);border-radius:10px;
-}
+.hinweis-box button{background:var(--tinte);color:white;border:none;padding:0.5rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.9rem;margin-left:0.5rem;}
+.zertifikat-bereich{margin-top:1rem;padding:1rem;background:#f0f4ff;border:2px dashed var(--meer);border-radius:10px;}
 .zertifikat-bereich p{margin:0 0 0.7rem;font-size:0.95rem;font-weight:600;}
-.zertifikat-bereich input{
-padding:10px;border:2px solid var(--linie);border-radius:8px;
-font-size:15px;font-family:monospace;letter-spacing:2px;text-align:center;
-max-width:280px;width:100%;
-}
-.zertifikat-bereich button{
-background:var(--meer);color:white;border:none;
-padding:10px 18px;border-radius:8px;cursor:pointer;
-font-weight:700;margin-left:0.5rem;font-size:0.95rem;
-}
-.zertifikat-bereich button:hover{background:#155a68;}
+.zertifikat-bereich input{padding:10px;border:2px solid var(--linie);border-radius:8px;font-size:15px;font-family:monospace;letter-spacing:2px;text-align:center;max-width:280px;width:100%;}
+.zertifikat-bereich button{background:var(--meer);color:white;border:none;padding:10px 18px;border-radius:8px;cursor:pointer;font-weight:700;margin-left:0.5rem;font-size:0.95rem;}
 .fehler{color:#c62828;font-size:0.9rem;margin-top:0.5rem;display:none;}
-
-/* Anmeldung */
-.anmeldung-form{
-background:white;padding:2rem;border-radius:16px;
-box-shadow:0 4px 15px rgba(0,0,0,.06);max-width:640px;
-}
+.anmeldung-form{background:white;padding:2rem;border-radius:16px;box-shadow:0 4px 15px rgba(0,0,0,.06);max-width:640px;}
 .anmeldung-form label{display:block;font-weight:700;margin:1rem 0 0.3rem;font-size:0.95rem;}
-.anmeldung-form input,.anmeldung-form select,.anmeldung-form textarea{
-width:100%;padding:12px;border:2px solid var(--linie);
-border-radius:10px;font-size:16px;font-family:inherit;
-}
+.anmeldung-form input,.anmeldung-form select,.anmeldung-form textarea{width:100%;padding:12px;border:2px solid var(--linie);border-radius:10px;font-size:16px;font-family:inherit;}
 .anmeldung-form textarea{min-height:90px;resize:vertical;}
-.anmeldung-form .checkbox-zeile{
-display:flex;gap:0.6rem;align-items:flex-start;
-margin-top:1.2rem;font-weight:normal;font-size:0.9rem;
-}
+.anmeldung-form .checkbox-zeile{display:flex;gap:0.6rem;align-items:flex-start;margin-top:1.2rem;font-weight:normal;font-size:0.9rem;}
 .anmeldung-form .checkbox-zeile input{margin-top:4px;width:auto;}
 .anmeldung-form .status{margin-top:1rem;font-weight:600;font-size:0.95rem;}
-
-/* Footer */
 footer{padding:2rem 0;font-size:0.9rem;color:var(--text-gedaempft);background:white;border-top:1px solid var(--linie);}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
-
-/* Modal */
-.modal{
-display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);
-z-index:999;align-items:center;justify-content:center;padding:20px;
-}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:999;align-items:center;justify-content:center;padding:20px;}
 .modal.offen{display:flex;}
-.modal-inhalt{
-background:white;padding:30px;border-radius:16px;
-max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);
-}
+.modal-inhalt{background:white;padding:30px;border-radius:16px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);}
 .modal-inhalt h3{margin-top:0;}
-.modal-inhalt input{
-width:100%;padding:12px;border:2px solid var(--linie);border-radius:10px;
-font-size:16px;margin:1rem 0;font-family:monospace;text-align:center;letter-spacing:2px;
-}
-.modal-inhalt .fehler{color:#c62828;font-size:0.9rem;margin-bottom:0.8rem;display:none;}
+.modal-inhalt input{width:100%;padding:12px;border:2px solid var(--linie);border-radius:10px;font-size:16px;margin:1rem 0;font-family:monospace;text-align:center;letter-spacing:2px;}
 .modal-knoepfe{display:flex;gap:0.6rem;justify-content:flex-end;}
-
-/* RTL für Arabisch – falls später ergänzt */
-html[dir="rtl"]{direction:rtl;}
-
-@media (max-width:700px){
-.niveau-kopf{flex-direction:column;align-items:flex-start;}
-nav{gap:1rem;}
-nav a{font-size:0.85rem;}
-.header-rechts{flex-direction:column;align-items:flex-start;gap:0.8rem;}
-}
+@media (max-width:700px){.niveau-kopf{flex-direction:column;align-items:flex-start;}.header-rechts{flex-direction:column;align-items:flex-start;gap:0.8rem;}}
 </style>
 </head>
 <body>
@@ -202,7 +92,7 @@ nav a{font-size:0.85rem;}
         <a href="#zertifikate" data-i18n="nav_zert">Zertifikate</a>
         <a href="#anmeldung" data-i18n="nav_anm">Anmeldung</a>
       </nav>
-      <div class="sprachen" role="group" aria-label="Sprache wählen">
+      <div class="sprachen" role="group">
         <button type="button" data-lang="de" aria-pressed="true">Deutsch</button>
         <button type="button" data-lang="fr" aria-pressed="false">Français</button>
         <button type="button" data-lang="en" aria-pressed="false">English</button>
@@ -214,15 +104,10 @@ nav a{font-size:0.85rem;}
 
 <main>
 
-<!-- Hero -->
 <div class="hero">
   <div class="wrap">
     <h1 data-i18n="hero_h1">Deutsch lernen bei BOPI</h1>
-    <p class="lead" data-i18n="hero_lead">
-      Kleine Gruppen und Einzelunterricht für Erwachsene, Schülerinnen und Schüler
-      und Geflüchtete. Online, von A1 bis C2. Teste dein Niveau kostenlos –
-      der erste Abschlusstest jeder Stufe ist für alle frei.
-    </p>
+    <p class="lead" data-i18n="hero_lead">Kleine Gruppen und Einzelunterricht für Erwachsene, Schülerinnen und Schüler und Geflüchtete. Online, von A1 bis C2. Teste dein Niveau kostenlos – der erste Abschlusstest jeder Stufe ist für alle frei.</p>
     <p>
       <a class="btn btn-sonne" href="#tests" data-i18n="hero_btn1">Zu den Abschlusstests</a>
       <a class="btn btn-leer" href="einstufungstest.html" data-i18n="hero_btn2">Einstufungstest machen</a>
@@ -230,109 +115,76 @@ nav a{font-size:0.85rem;}
   </div>
 </div>
 
-<!-- Kurse und Zielgruppen -->
 <section id="kurse" class="hell">
   <div class="wrap">
     <h2 data-i18n="kurse_h2">Für wen sind die Kurse?</h2>
-    <p class="section-untertitel" data-i18n="kurse_sub">
-      BOPI bietet Online-Deutschkurse für drei Zielgruppen. Alle Kurse sind live,
-      in kleinen Gruppen oder als Einzelunterricht, flexibel auch abends und am Wochenende.
-    </p>
-
+    <p class="section-untertitel" data-i18n="kurse_sub">BOPI bietet Online-Deutschkurse für drei Zielgruppen. Alle Kurse sind live, in kleinen Gruppen oder als Einzelunterricht.</p>
     <div class="niveau-block">
       <h3 data-i18n="erw_h3">👔 Erwachsene</h3>
-      <p data-i18n="erw_p">Deutsch für Beruf und Alltag: Gespräche führen, E-Mails schreiben, sicherer auftreten. Auf Wunsch mit Vorbereitung auf Goethe, telc oder TestDaF.</p>
+      <p data-i18n="erw_p">Deutsch für Beruf und Alltag: Gespräche führen, E-Mails schreiben, sicherer auftreten.</p>
       <a class="btn btn-leer" href="#anmeldung" data-i18n="btn_anm">Jetzt anmelden</a>
     </div>
-
     <div class="niveau-block">
       <h3 data-i18n="sch_h3">🎒 Schülerinnen und Schüler</h3>
-      <p data-i18n="sch_p">Hilfe beim Fach Deutsch oder beim Lernen von Deutsch als Zweitsprache: Grammatik, Aufsatz, Textanalyse und Vorbereitung auf Klassenarbeiten.</p>
+      <p data-i18n="sch_p">Hilfe beim Fach Deutsch: Grammatik, Aufsatz, Textanalyse und Vorbereitung auf Klassenarbeiten.</p>
       <a class="btn btn-leer" href="#anmeldung" data-i18n="btn_anm">Jetzt anmelden</a>
     </div>
-
     <div class="niveau-block">
       <h3 data-i18n="gef_h3">🌍 Geflüchtete</h3>
-      <p data-i18n="gef_p">Ein Einstieg ohne Vorkenntnisse. Wir üben die Sprache für den Alltag: Arzt, Wohnung, Ämter, Schule. Erklärungen auf Englisch, Französisch oder Arabisch möglich.</p>
+      <p data-i18n="gef_p">Ein Einstieg ohne Vorkenntnisse. Wir üben die Sprache für den Alltag: Arzt, Wohnung, Ämter, Schule.</p>
       <a class="btn btn-leer" href="#anmeldung" data-i18n="btn_anm">Jetzt anmelden</a>
     </div>
   </div>
 </section>
 
-<!-- Abschlusstests -->
 <section id="tests">
   <div class="wrap">
     <h2 data-i18n="tests_h2">Abschlusstests von A1 bis C2</h2>
-    <p class="section-untertitel" data-i18n="tests_sub">
-      Jede Stufe umfasst fünf Abschlusstests. Test 1 ist für alle kostenlos.
-      Die Tests 2 bis 5 sind exklusiv für Premium-Teilnehmer, die ich persönlich freischalte.
-      Wenn du einen Freischaltcode hast, kannst du ihn direkt hier eingeben.
-    </p>
-
+    <p class="section-untertitel" data-i18n="tests_sub">Test 1 ist für alle kostenlos. Die Tests 2 bis 5 sind exklusiv für Premium-Teilnehmer. Wenn du einen Freischaltcode hast, gib ihn direkt hier ein.</p>
     <div id="niveauListe"></div>
   </div>
 </section>
 
-<!-- Zertifikate -->
 <section id="zertifikate" class="hell">
   <div class="wrap">
     <h2 data-i18n="zert_h2">Zertifikate</h2>
-    <p class="section-untertitel" data-i18n="zert_sub">
-      Nach bestandenem Abschlusstest und Freischaltung durch die Kursleitung
-      erhältst du deinen persönlichen Zertifikatscode. Gib ihn im jeweiligen
-      Niveau-Bereich oben ein, um dein BOPI-Zertifikat als PDF zu drucken.
-    </p>
-    <p style="color:var(--text-gedaempft);font-size:0.95rem;" data-i18n="zert_note">
-      🔒 Die Zertifikate sind nicht frei zugänglich. Sie werden nur nach
-      erfolgreich bestandenem Test und persönlicher Freischaltung ausgegeben.
-    </p>
+    <p class="section-untertitel" data-i18n="zert_sub">Nach bestandenem Abschlusstest und Freischaltung durch die Kursleitung erhältst du deinen persönlichen Zertifikatscode. Gib ihn im jeweiligen Niveau-Bereich oben ein.</p>
+    <p style="color:var(--text-gedaempft);font-size:0.95rem;" data-i18n="zert_note">🔒 Die Zertifikate werden nur nach erfolgreich bestandenem Test und persönlicher Freischaltung ausgegeben.</p>
   </div>
 </section>
 
-<!-- Anmeldung -->
 <section id="anmeldung">
   <div class="wrap">
     <h2 data-i18n="anm_h2">Kursanmeldung</h2>
-    <p class="section-untertitel" data-i18n="anm_sub">
-      Füllen Sie das Formular aus. Ich melde mich innerhalb von zwei Werktagen bei Ihnen.
-    </p>
-
+    <p class="section-untertitel" data-i18n="anm_sub">Füllen Sie das Formular aus. Ich melde mich innerhalb von zwei Werktagen.</p>
     <form class="anmeldung-form" id="anmeldungForm">
       <label for="zielgruppe" data-i18n="f_ziel">Ich melde mich an als *</label>
-      <select id="zielgruppe" name="Zielgruppe" required>
+      <select id="zielgruppe" required>
         <option value="" data-i18n="f_ziel_wahl">Bitte wählen</option>
         <option value="Erwachsener" data-i18n="f_ziel_erw">Erwachsener</option>
         <option value="Schüler/in" data-i18n="f_ziel_sch">Schüler/in</option>
         <option value="Geflüchtete/r" data-i18n="f_ziel_gef">Geflüchtete/r</option>
       </select>
-
       <label for="vorname" data-i18n="f_vorname">Vorname *</label>
-      <input type="text" id="vorname" name="Vorname" required>
-
+      <input type="text" id="vorname" required>
       <label for="nachname" data-i18n="f_nachname">Nachname *</label>
-      <input type="text" id="nachname" name="Nachname" required>
-
+      <input type="text" id="nachname" required>
       <label for="email" data-i18n="f_email">E-Mail *</label>
-      <input type="email" id="email" name="Email" required>
-
+      <input type="email" id="email" required>
       <label for="telefon" data-i18n="f_tel">Telefon (optional)</label>
-      <input type="tel" id="telefon" name="Telefon">
-
+      <input type="tel" id="telefon">
       <label for="niveau" data-i18n="f_niveau">Gewünschtes Niveau</label>
-      <select id="niveau" name="Niveau">
+      <select id="niveau">
         <option value="" data-i18n="f_niveau_wahl">Weiß ich nicht / Einstufungstest gewünscht</option>
         <option>A1</option><option>A2</option><option>B1</option>
         <option>B2</option><option>C1</option><option>C2</option>
       </select>
-
       <label for="nachricht" data-i18n="f_nachricht">Nachricht / Besondere Wünsche</label>
-      <textarea id="nachricht" name="Nachricht" data-i18n-placeholder="f_nachricht_ph" placeholder="z. B. abends, Wochenende, Einzelunterricht ..."></textarea>
-
+      <textarea id="nachricht" data-i18n-placeholder="f_nachricht_ph" placeholder="z. B. abends, Wochenende ..."></textarea>
       <label class="checkbox-zeile">
         <input type="checkbox" id="datenschutz" required>
         <span data-i18n="f_datenschutz">Ich stimme zu, dass meine Daten zur Bearbeitung der Anmeldung gespeichert und an die Kursleitung gesendet werden. *</span>
       </label>
-
       <button type="submit" class="btn btn-voll" style="margin-top:1.5rem;" data-i18n="f_senden">🚀 Anmeldung senden</button>
       <p class="status" id="anmeldungStatus"></p>
     </form>
@@ -343,7 +195,7 @@ nav a{font-size:0.85rem;}
 
 <footer>
   <div class="wrap">
-    <span>© 2026 Paco <span data-i18n="marke_unter">Kamegne</span></span>
+    <span>© 2026 BOPI <span data-i18n="marke_unter">Sprachschule</span></span>
     <nav>
       <a href="impressum.html" data-i18n="f_imp">Impressum</a>
       <a href="datenschutz.html" data-i18n="f_dat">Datenschutz</a>
@@ -351,12 +203,11 @@ nav a{font-size:0.85rem;}
   </div>
 </footer>
 
-<!-- Modal für Premium-Code -->
 <div class="modal" id="modal">
   <div class="modal-inhalt">
     <h3 id="modalTitel">Premium freischalten</h3>
-    <p id="modalText">Gib deinen Freischaltcode für dieses Niveau ein.</p>
-    <div class="fehler" id="modalFehler">Falscher Code. Bitte prüfe deine Eingabe.</div>
+    <p id="modalText">Gib deinen Freischaltcode ein.</p>
+    <div class="fehler" id="modalFehler">Falscher Code.</div>
     <input type="text" id="codeEingabe" placeholder="Code" autocomplete="off">
     <div class="modal-knoepfe">
       <button class="btn btn-leer" onclick="modalSchliessen()" data-i18n="m_abbrechen">Abbrechen</button>
@@ -366,183 +217,118 @@ nav a{font-size:0.85rem;}
 </div>
 
 <script>
-/* ============================================================
-   1. WEB3FORMS-KEY
-   ============================================================ */
 const ACCESS_KEY = "24db5065-e8ba-40e7-9b38-c10649f3be16";
 
-/* ============================================================
-   2. PREMIUM-CODES (Tests 2–5)
-   ============================================================ */
 const PREMIUM_CODES = {
-  A1: "A1-PREMIUM-2026",
-  A2: "A2-PREMIUM-2026",
-  B1: "B1-PREMIUM-2026",
-  B2: "B2-PREMIUM-2026",
-  C1: "C1-PREMIUM-2026",
-  C2: "C2-PREMIUM-2026"
+  A1:"A1-PREMIUM-2026", A2:"A2-PREMIUM-2026", B1:"B1-PREMIUM-2026",
+  B2:"B2-PREMIUM-2026", C1:"C1-PREMIUM-2026", C2:"C2-PREMIUM-2026"
 };
-
-/* ============================================================
-   3. ZERTIFIKAT-CODES
-   ============================================================ */
 const ZERTIFIKAT_CODES = {
-  A1: "BOPI-A1-GOLD",
-  A2: "BOPI-A2-GOLD",
-  B1: "BOPI-B1-GOLD",
-  B2: "BOPI-B2-GOLD",
-  C1: "BOPI-C1-GOLD",
-  C2: "BOPI-C2-GOLD"
+  A1:"BOPI-A1-GOLD", A2:"BOPI-A2-GOLD", B1:"BOPI-B1-GOLD",
+  B2:"BOPI-B2-GOLD", C1:"BOPI-C1-GOLD", C2:"BOPI-C2-GOLD"
 };
 
-/* ============================================================
-   4. Niveaus (Beschreibungen pro Sprache)
-   ============================================================ */
 const niveaus = [
-  { code:"A1", emoji:"🌱", beschreibung:{
-      de:"Erste Wörter, Vorstellung, einfache Sätze",
-      fr:"Premiers mots, se présenter, phrases simples",
-      en:"First words, introducing yourself, simple sentences",
-      sw:"Maneno ya kwanza, kujitambulisha, sentensi rahisi"
-  }},
-  { code:"A2", emoji:"🚶", beschreibung:{
-      de:"Alltag, Perfekt, Nebensätze, Reisen",
-      fr:"Vie quotidienne, passé composé, subordonnées, voyages",
-      en:"Everyday life, perfect tense, subordinate clauses, travel",
-      sw:"Maisha ya kila siku, wakati uliopita, sentensi tegemezi, safari"
-  }},
-  { code:"B1", emoji:"🚶‍♂️📘", beschreibung:{
-      de:"Meinung, Beruf, Gesellschaft, Medien",
-      fr:"Opinion, travail, société, médias",
-      en:"Opinions, work, society, media",
-      sw:"Maoni, kazi, jamii, vyombo vya habari"
-  }},
-  { code:"B2", emoji:"🎓", beschreibung:{
-      de:"Wissenschaft, Wirtschaft, Argumentation",
-      fr:"Science, économie, argumentation",
-      en:"Science, economy, argumentation",
-      sw:"Sayansi, uchumi, hoja"
-  }},
-  { code:"C1", emoji:"🏛️", beschreibung:{
-      de:"Nominalstil, Idiomatik, gehobene Sprache",
-      fr:"Style nominal, idiomatique, langue soutenue",
-      en:"Nominal style, idioms, formal language",
-      sw:"Mtindo wa nomino, nahau, lugha ya juu"
-  }},
-  { code:"C2", emoji:"🏛️🏅", beschreibung:{
-      de:"Muttersprachliches Niveau, Stilistik, Rhetorik",
-      fr:"Niveau natif, stylistique, rhétorique",
-      en:"Native level, stylistics, rhetoric",
-      sw:"Kiwango cha lugha ya mama, mitindo, usemaji"
-  }}
+  {code:"A1",emoji:"🌱",b:{de:"Erste Wörter, Vorstellung, einfache Sätze",fr:"Premiers mots, se présenter, phrases simples",en:"First words, introducing yourself",sw:"Maneno ya kwanza, kujitambulisha"}},
+  {code:"A2",emoji:"🚶",b:{de:"Alltag, Perfekt, Nebensätze, Reisen",fr:"Vie quotidienne, passé composé, voyages",en:"Everyday life, perfect tense, travel",sw:"Maisha ya kila siku, safari"}},
+  {code:"B1",emoji:"📘",b:{de:"Meinung, Beruf, Gesellschaft, Medien",fr:"Opinion, travail, société, médias",en:"Opinions, work, society, media",sw:"Maoni, kazi, jamii"}},
+  {code:"B2",emoji:"🎓",b:{de:"Wissenschaft, Wirtschaft, Argumentation",fr:"Science, économie, argumentation",en:"Science, economy, argumentation",sw:"Sayansi, uchumi, hoja"}},
+  {code:"C1",emoji:"🏛️",b:{de:"Nominalstil, Idiomatik, gehobene Sprache",fr:"Style nominal, idiomatique",en:"Nominal style, idioms",sw:"Mtindo wa nomino, nahau"}},
+  {code:"C2",emoji:"🏅",b:{de:"Muttersprachliches Niveau, Stilistik, Rhetorik",fr:"Niveau natif, stylistique",en:"Native level, stylistics",sw:"Kiwango cha lugha ya mama"}}
 ];
 
-/* ============================================================
-   5. Übersetzungen
-   ============================================================ */
 const T = {
-  de: {
-    marke_unter: "Sprachschule",
-    nav_kurse: "Kurse",
-    nav_tests: "Abschlusstests",
-    nav_zert: "Zertifikate",
-    nav_anm: "Anmeldung",
-    hero_h1: "Deutsch lernen bei BOPI",
-    hero_lead: "Kleine Gruppen und Einzelunterricht für Erwachsene, Schülerinnen und Schüler und Geflüchtete. Online, von A1 bis C2. Teste dein Niveau kostenlos – der erste Abschlusstest jeder Stufe ist für alle frei.",
-    hero_btn1: "Zu den Abschlusstests",
-    hero_btn2: "Einstufungstest machen",
-    kurse_h2: "Für wen sind die Kurse?",
-    kurse_sub: "BOPI bietet Online-Deutschkurse für drei Zielgruppen. Alle Kurse sind live, in kleinen Gruppen oder als Einzelunterricht, flexibel auch abends und am Wochenende.",
-    erw_h3: "👔 Erwachsene",
-    erw_p: "Deutsch für Beruf und Alltag: Gespräche führen, E-Mails schreiben, sicherer auftreten. Auf Wunsch mit Vorbereitung auf Goethe, telc oder TestDaF.",
-    sch_h3: "🎒 Schülerinnen und Schüler",
-    sch_p: "Hilfe beim Fach Deutsch oder beim Lernen von Deutsch als Zweitsprache: Grammatik, Aufsatz, Textanalyse und Vorbereitung auf Klassenarbeiten.",
-    gef_h3: "🌍 Geflüchtete",
-    gef_p: "Ein Einstieg ohne Vorkenntnisse. Wir üben die Sprache für den Alltag: Arzt, Wohnung, Ämter, Schule. Erklärungen auf Englisch, Französisch oder Arabisch möglich.",
-    btn_anm: "Jetzt anmelden",
-    tests_h2: "Abschlusstests von A1 bis C2",
-    tests_sub: "Jede Stufe umfasst fünf Abschlusstests. Test 1 ist für alle kostenlos. Die Tests 2 bis 5 sind exklusiv für Premium-Teilnehmer, die ich persönlich freischalte. Wenn du einen Freischaltcode hast, kannst du ihn direkt hier eingeben.",
-    zert_h2: "Zertifikate",
-    zert_sub: "Nach bestandenem Abschlusstest und Freischaltung durch die Kursleitung erhältst du deinen persönlichen Zertifikatscode. Gib ihn im jeweiligen Niveau-Bereich oben ein, um dein BOPI-Zertifikat als PDF zu drucken.",
-    zert_note: "🔒 Die Zertifikate sind nicht frei zugänglich. Sie werden nur nach erfolgreich bestandenem Test und persönlicher Freischaltung ausgegeben.",
-    anm_h2: "Kursanmeldung",
-    anm_sub: "Füllen Sie das Formular aus. Ich melde mich innerhalb von zwei Werktagen bei Ihnen.",
-    f_ziel: "Ich melde mich an als *",
-    f_ziel_wahl: "Bitte wählen",
-    f_ziel_erw: "Erwachsener",
-    f_ziel_sch: "Schüler/in",
-    f_ziel_gef: "Geflüchtete/r",
-    f_vorname: "Vorname *",
-    f_nachname: "Nachname *",
-    f_email: "E-Mail *",
-    f_tel: "Telefon (optional)",
-    f_niveau: "Gewünschtes Niveau",
-    f_niveau_wahl: "Weiß ich nicht / Einstufungstest gewünscht",
-    f_nachricht: "Nachricht / Besondere Wünsche",
-    f_nachricht_ph: "z. B. abends, Wochenende, Einzelunterricht ...",
-    f_datenschutz: "Ich stimme zu, dass meine Daten zur Bearbeitung der Anmeldung gespeichert und an die Kursleitung gesendet werden. *",
-    f_senden: "🚀 Anmeldung senden",
-    f_imp: "Impressum",
-    f_dat: "Datenschutz",
-    m_abbrechen: "Abbrechen",
-    m_freischalten: "Freischalten",
-    test: "Test",
-    erst_frei: "kostenlos",
-    premium_titel: "Premium {n} freischalten",
-    premium_text: "Gib deinen Freischaltcode für das Niveau {n} ein.",
-    premium_fehler: "Falscher Code. Bitte prüfe deine Eingabe.",
-    premium_gesperrt: "🔒 Die Tests 2 bis 5 für {n} sind Premium.",
-    premium_btn: "Code eingeben",
-    premium_ok: "✅ Premium für {n} freigeschaltet. Alle fünf Tests sind verfügbar.",
-    zert_bereich: "🎓 {n} bestanden? Gib deinen Zertifikatscode ein:",
-    zert_btn: "Zertifikat anzeigen",
-    zert_fehler: "Falscher Code.",
-    zert_ok: "✅ Zertifikat freigeschaltet!",
-    zert_oeffnen: "🎓 BOPI {n} Zertifikat öffnen",
-    zert_tipp: "Tipp: Auf der Zertifikatsseite Namen eintragen und mit Strg+P als PDF drucken.",
-    anm_gesendet: "✅ Danke! Ihre Anmeldung wurde gesendet.",
-    anm_fehler: "❌ Fehler beim Senden. Bitte per E-Mail melden.",
-    anm_laeuft: "Wird gesendet ..."
+  de: {marke_unter:"Sprachschule",nav_kurse:"Kurse",nav_tests:"Abschlusstests",nav_zert:"Zertifikate",nav_anm:"Anmeldung",
+    hero_h1:"Deutsch lernen bei BOPI",hero_lead:"Kleine Gruppen und Einzelunterricht für Erwachsene, Schülerinnen und Schüler und Geflüchtete. Online, von A1 bis C2.",
+    hero_btn1:"Zu den Abschlusstests",hero_btn2:"Einstufungstest machen",
+    kurse_h2:"Für wen sind die Kurse?",kurse_sub:"BOPI bietet Online-Deutschkurse für drei Zielgruppen.",
+    erw_h3:"👔 Erwachsene",erw_p:"Deutsch für Beruf und Alltag.",
+    sch_h3:"🎒 Schülerinnen und Schüler",sch_p:"Hilfe beim Fach Deutsch.",
+    gef_h3:"🌍 Geflüchtete",gef_p:"Ein Einstieg ohne Vorkenntnisse.",
+    btn_anm:"Jetzt anmelden",tests_h2:"Abschlusstests von A1 bis C2",
+    tests_sub:"Test 1 ist für alle kostenlos. Tests 2–5 sind Premium.",
+    zert_h2:"Zertifikate",zert_sub:"Nach bestandenem Test erhältst du einen Zertifikatscode.",
+    zert_note:"🔒 Zertifikate nur nach Freischaltung.",
+    anm_h2:"Kursanmeldung",anm_sub:"Füllen Sie das Formular aus.",
+    f_ziel:"Ich melde mich an als *",f_ziel_wahl:"Bitte wählen",f_ziel_erw:"Erwachsener",f_ziel_sch:"Schüler/in",f_ziel_gef:"Geflüchtete/r",
+    f_vorname:"Vorname *",f_nachname:"Nachname *",f_email:"E-Mail *",f_tel:"Telefon (optional)",
+    f_niveau:"Gewünschtes Niveau",f_niveau_wahl:"Weiß ich nicht / Einstufungstest gewünscht",
+    f_nachricht:"Nachricht",f_nachricht_ph:"z. B. abends, Wochenende ...",
+    f_datenschutz:"Ich stimme der Datenspeicherung zu. *",f_senden:"🚀 Anmeldung senden",
+    f_imp:"Impressum",f_dat:"Datenschutz",m_abbrechen:"Abbrechen",m_freischalten:"Freischalten",
+    premium_gesperrt:"🔒 Tests 2–5 für {n} sind Premium.",premium_btn:"Code eingeben",
+    premium_ok:"✅ Premium für {n} freigeschaltet.",
+    zert_bereich:"🎓 {n} bestanden? Zertifikatscode eingeben:",zert_btn:"Zertifikat anzeigen",
+    zert_fehler:"Falscher Code.",zert_ok:"✅ Zertifikat freigeschaltet!",
+    zert_oeffnen:"🎓 BOPI {n} Zertifikat öffnen",
+    anm_gesendet:"✅ Anmeldung gesendet.",anm_fehler:"❌ Fehler beim Senden.",anm_laeuft:"Wird gesendet ..."
   },
-  fr: {
-    marke_unter: "École de langues",
-    nav_kurse: "Cours",
-    nav_tests: "Tests finaux",
-    nav_zert: "Certificats",
-    nav_anm: "Inscription",
-    hero_h1: "Apprendre l'allemand chez BOPI",
-    hero_lead: "Petits groupes et cours individuels pour adultes, élèves et réfugiés. En ligne, de A1 à C2. Testez votre niveau gratuitement – le premier test final de chaque niveau est ouvert à tous.",
-    hero_btn1: "Vers les tests finaux",
-    hero_btn2: "Faire le test de niveau",
-    kurse_h2: "Pour qui sont les cours ?",
-    kurse_sub: "BOPI propose des cours d'allemand en ligne pour trois publics. Tous les cours sont en direct, en petits groupes ou individuels, flexibles même le soir et le week-end.",
-    erw_h3: "👔 Adultes",
-    erw_p: "L'allemand pour le travail et la vie quotidienne : mener des conversations, écrire des e-mails, gagner en assurance. Sur demande, préparation à Goethe, telc ou TestDaF.",
-    sch_h3: "🎒 Élèves",
-    sch_p: "Aide en allemand comme matière ou pour apprendre l'allemand comme seconde langue : grammaire, rédaction, analyse de texte et préparation aux contrôles.",
-    gef_h3: "🌍 Réfugiés",
-    gef_p: "Un début sans connaissances préalables. Nous pratiquons la langue du quotidien : médecin, logement, administrations, école. Explications en anglais, français ou arabe possibles.",
-    btn_anm: "S'inscrire maintenant",
-    tests_h2: "Tests finaux de A1 à C2",
-    tests_sub: "Chaque niveau comprend cinq tests finaux. Le test 1 est gratuit pour tous. Les tests 2 à 5 sont réservés aux participants Premium que je débloque personnellement. Si vous avez un code, saisissez-le ici.",
-    zert_h2: "Certificats",
-    zert_sub: "Après avoir réussi le test final et après déblocage par l'enseignant, vous recevez votre code de certificat personnel. Saisissez-le dans la section du niveau ci-dessus pour imprimer votre certificat BOPI en PDF.",
-    zert_note: "🔒 Les certificats ne sont pas librement accessibles. Ils ne sont délivrés qu'après réussite du test et déblocage personnel.",
-    anm_h2: "Inscription au cours",
-    anm_sub: "Remplissez le formulaire. Je vous réponds dans un délai de deux jours ouvrables.",
-    f_ziel: "Je m'inscris en tant que *",
-    f_ziel_wahl: "Veuillez choisir",
-    f_ziel_erw: "Adulte",
-    f_ziel_sch: "Élève",
-    f_ziel_gef: "Réfugié(e)",
-    f_vorname: "Prénom *",
-    f_nachname: "Nom *",
-    f_email: "E-mail *",
-    f_tel: "Téléphone (facultatif)",
-    f_niveau: "Niveau souhaité",
+  fr: {marke_unter:"École de langues",nav_kurse:"Cours",nav_tests:"Tests finaux",nav_zert:"Certificats",nav_anm:"Inscription",
+    hero_h1:"Apprendre l'allemand chez BOPI",hero_lead:"Petits groupes et cours individuels pour adultes, élèves et réfugiés. En ligne, de A1 à C2.",
+    hero_btn1:"Vers les tests finaux",hero_btn2:"Faire le test de niveau",
+    kurse_h2:"Pour qui sont les cours ?",kurse_sub:"BOPI propose des cours pour trois publics.",
+    erw_h3:"👔 Adultes",erw_p:"L'allemand pour le travail et la vie quotidienne.",
+    sch_h3:"🎒 Élèves",sch_p:"Aide en allemand comme matière.",
+    gef_h3:"🌍 Réfugiés",gef_p:"Un début sans connaissances préalables.",
+    btn_anm:"S'inscrire",tests_h2:"Tests finaux de A1 à C2",
+    tests_sub:"Le test 1 est gratuit. Les tests 2–5 sont Premium.",
+    zert_h2:"Certificats",zert_sub:"Après réussite, vous recevez un code de certificat.",
+    zert_note:"🔒 Certificats uniquement après déblocage.",
+    anm_h2:"Inscription au cours",anm_sub:"Remplissez le formulaire.",
+    f_ziel:"Je m'inscris en tant que *",f_ziel_wahl:"Veuillez choisir",f_ziel_erw:"Adulte",f_ziel_sch:"Élève",f_ziel_gef:"Réfugié(e)",
+    f_vorname:"Prénom *",f_nachname:"Nom *",f_email:"E-mail *",f_tel:"Téléphone (facultatif)",
+    f_niveau:"Niveau souhaité",f_niveau_wahl:"Je ne sais pas / test de niveau souhaité",
+    f_nachricht:"Message",f_nachricht_ph:"p. ex. le soir, le week-end ...",
+    f_datenschutz:"J'accepte le traitement de mes données. *",f_senden:"🚀 Envoyer l'inscription",
+    f_imp:"Mentions légales",f_dat:"Protection des données",m_abbrechen:"Annuler",m_freischalten:"Débloquer",
+    premium_gesperrt:"🔒 Les tests 2–5 pour {n} sont Premium.",premium_btn:"Saisir le code",
+    premium_ok:"✅ Premium pour {n} débloqué.",
+    zert_bereich:"🎓 {n} réussi ? Saisissez le code du certificat :",zert_btn:"Afficher le certificat",
+    zert_fehler:"Code incorrect.",zert_ok:"✅ Certificat débloqué !",
+    zert_oeffnen:"🎓 Ouvrir le certificat BOPI {n}",
+    anm_gesendet:"✅ Inscription envoyée.",anm_fehler:"❌ Erreur d'envoi.",anm_laeuft:"Envoi en cours ..."
+  },
+  en: {marke_unter:"Language school",nav_kurse:"Courses",nav_tests:"Final tests",nav_zert:"Certificates",nav_anm:"Sign-up",
+    hero_h1:"Learn German at BOPI",hero_lead:"Small groups and one-to-one lessons for adults, students and refugees. Online, from A1 to C2.",
+    hero_btn1:"Go to final tests",hero_btn2:"Take the placement test",
+    kurse_h2:"Who are the courses for?",kurse_sub:"BOPI offers online German courses for three groups.",
+    erw_h3:"👔 Adults",erw_p:"German for work and everyday life.",
+    sch_h3:"🎒 School students",sch_p:"Help with German as a school subject.",
+    gef_h3:"🌍 Refugees",gef_p:"A start without any prior knowledge.",
+    btn_anm:"Sign up",tests_h2:"Final tests from A1 to C2",
+    tests_sub:"Test 1 is free. Tests 2–5 are Premium.",
+    zert_h2:"Certificates",zert_sub:"After passing, you receive a certificate code.",
+    zert_note:"🔒 Certificates only after unlocking.",
+    anm_h2:"Course sign-up",anm_sub:"Fill in the form.",
+    f_ziel:"I am registering as *",f_ziel_wahl:"Please choose",f_ziel_erw:"Adult",f_ziel_sch:"Student",f_ziel_gef:"Refugee",
+    f_vorname:"First name *",f_nachname:"Last name *",f_email:"Email *",f_tel:"Phone (optional)",
+    f_niveau:"Desired level",f_niveau_wahl:"I don't know / placement test requested",
+    f_nachricht:"Message",f_nachricht_ph:"e.g. evenings, weekends ...",
+    f_datenschutz:"I agree to data processing. *",f_senden:"🚀 Send sign-up",
+    f_imp:"Legal notice",f_dat:"Privacy",m_abbrechen:"Cancel",m_freischalten:"Unlock",
+    premium_gesperrt:"🔒 Tests 2–5 for {n} are Premium.",premium_btn:"Enter code",
+    premium_ok:"✅ Premium for {n} unlocked.",
+    zert_bereich:"🎓 Passed {n}? Enter certificate code:",zert_btn:"Show certificate",
+    zert_fehler:"Wrong code.",zert_ok:"✅ Certificate unlocked!",
+    zert_oeffnen:"🎓 Open BOPI {n} certificate",
+    anm_gesendet:"✅ Sign-up sent.",anm_fehler:"❌ Sending failed.",anm_laeuft:"Sending ..."
+  },
+  sw: {marke_unter:"Shule ya lugha",nav_kurse:"Kozi",nav_tests:"Mitihani ya mwisho",nav_zert:"Vyeti",nav_anm:"Kujiandikisha",
+    hero_h1:"Jifunze Kijerumani BOPI",hero_lead:"Vikundi vidogo na masomo ya mtu mmoja mmoja kwa watu wazima, wanafunzi na wakimbizi. Mtandaoni, A1 hadi C2.",
+    hero_btn1:"Nenda kwenye mitihani",hero_btn2:"Fanya jaribio la ngazi",
+    kurse_h2:"Kozi ni za nani?",kurse_sub:"BOPI inatoa kozi za Kijerumani mtandaoni kwa makundi matatu.",
+    erw_h3:"👔 Watu wazima",erw_p:"Kijerumani kwa kazi na maisha ya kila siku.",
+    sch_h3:"🎒 Wanafunzi",sch_p:"Msaada katika somo la Kijerumani.",
+    gef_h3:"🌍 Wakimbizi",gef_p:"Mwanzo bila ujuzi wa awali.",
+    btn_anm:"Jiandikishe",tests_h2:"Mitihani ya mwisho A1 hadi C2",
+    tests_sub:"Mtihani 1 ni bure. Mitihani 2–5 ni ya Premium.",
+    zert_h2:"Vyeti",zert_sub:"Baada ya kufaulu, unapata msimbo wa cheti.",
+    zert_note:"🔒 Vyeti tu baada ya kufunguliwa.",
+    anm_h2:"Kujiandikisha kozi",anm_sub:"Jaza fomu.",
+    f_ziel:"Ninajiandikisha kama *",f_ziel_wahl:"Tafadhali chagua",f_ziel_erw:"Mtu mzima",f_ziel_sch:"Mwanafunzi",f_ziel_gef:"Mkimbizi",
+    f_vorname:"Jina la kwanza *",f_nachname:"Jina la mwisho *",f_email:"Barua pepe *",f_tel:"Simu (si lazima)",
+    f_niveau:"Ngazi unayotaka",f_niveau_wahl:"Sijui / nataka jaribio la ngazi",
+    f_nachricht:"Ujumbe",f_nachricht_ph:"k.m. jioni, wikendi ...",
+    f_datenschutz:"Nakubali data yangu ichakatwe. *",f_senden:"🚀 Tuma usajili",
+    f_imp:"Taarifa za kisheria",f_dat:"Ulinzi wa data",m_abbrechen:"Ghairi",m_freischalten:"Fungua",
    
-render();
-</script>
-
-</body>
-</html>
