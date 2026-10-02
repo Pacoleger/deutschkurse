@@ -5,7 +5,7 @@
   <title>Meine Deutschkurse</title>
 </head>
 <body>
-  <h1>Herzlich willkommen zu meinen Deutschkursen</h1>
+  <h1>Herzlich willkommen zu meinen Deutschkursen haha</h1>
   <p>Hier entsteht meine Webseite. Bald findest du hier alle Informationen zu meinen Kursen.</p>
 </body>
 </html>
