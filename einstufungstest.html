@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Einstufungstest</title>
+  <meta name="robots" content="noindex">
+  <style>
+    :root { --tinte:#1b2a41; --papier:#f5f7fa; --sonne:#ffc83d; --meer:#1f7a8c; --weiss:#fff; --linie:#d5dce5; --gedaempft:#4a5a70; }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body { margin:0; background:var(--papier); color:var(--tinte); font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,Roboto,sans-serif; font-size:1.0625rem; line-height:1.6; }
+    a { color: var(--meer); }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 0 1.25rem; }
+    header { padding: 1.25rem 0; }
+    header .wrap { display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; }
+    .sprachen { display:flex; flex-wrap:wrap; gap:0.5rem; }
+    .sprachen button { font:inherit; font-size:0.95rem; cursor:pointer; padding:0.25rem 0.9rem; border-radius:999px; border:2px solid var(--linie); background:var(--weiss); color:var(--tinte); }
+    .sprachen button:hover { border-color: var(--tinte); }
+    .sprachen button[aria-pressed="true"] { background:var(--sonne); border-color:var(--tinte); font-weight:700; }
+    button:focus-visible, a:focus-visible, input:focus-visible { outline:3px solid var(--tinte); outline-offset:3px; }
+    h1 { font-size: clamp(1.7rem, 4vw, 2.3rem); line-height:1.2; margin: 1rem 0 1rem; }
+    .hinweis { color: var(--gedaempft); max-width: 40em; }
+    .btn { display:inline-block; padding:0.85rem 1.5rem; border-radius:999px; font:inherit; font-weight:700; background:var(--tinte); color:var(--weiss); border:2px solid var(--tinte); cursor:pointer; }
+    .btn:hover { background:#0f1a2b; }
+    label.feld { display:block; font-weight:700; margin: 1.5rem 0 0.4rem; }
+    input[type="text"] { font:inherit; padding:0.7rem 1rem; border:2px solid var(--tinte); border-radius:0.7rem; width:100%; max-width:22rem; background:var(--weiss); }
+    .zustimmung { display:flex; gap:0.7rem; align-items:flex-start; margin: 1.2rem 0 1.5rem; max-width: 36em; }
+    .zustimmung input { margin-top: 0.4rem; width: 1.1rem; height: 1.1rem; flex: none; }
+    fieldset.frage { border:0; border-top:1px solid var(--linie); margin:0; padding:1.2rem 0; }
+    fieldset.frage legend { font-weight:700; padding:0; margin-bottom:0.7rem; float:left; width:100%; }
+    .antworten { clear:both; display:flex; flex-wrap:wrap; gap:0.6rem; }
+    .antworten label { border:2px solid var(--linie); border-radius:999px; padding:0.4rem 1.1rem; cursor:pointer; background:var(--weiss); }
+    .antworten label:hover { border-color: var(--tinte); }
+    .antworten label:has(input:checked) { background:var(--sonne); border-color:var(--tinte); font-weight:700; }
+    .antworten label:has(input:focus-visible) { outline:3px solid var(--tinte); outline-offset:2px; }
+    .antworten input { position:absolute; opacity:0; pointer-events:none; }
+    .fehler { color:#a32020; font-weight:700; }
+    .ergebnis { margin: 1.5rem 0 3rem; padding:1.5rem; border:3px solid var(--sonne); border-radius:1rem; background:var(--weiss); }
+    .ergebnis h2 { margin:0 0 0.5rem; font-size:1.5rem; }
+    .ergebnis strong.stufe { font-size:1.6rem; display:block; margin-top:0.5rem; }
+    .ergebnis p { margin: 0.5rem 0 0; }
+    main { padding-bottom: 3rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a href="index.html" data-i18n="back">← Zur Startseite</a>
+    <div class="sprachen" role="group" aria-label="Sprache / Language / Langue / اللغة / Lugha">
+      <button type="button" data-lang="de" lang="de" aria-pressed="true">Deutsch</button>
+      <button type="button" data-lang="fr" lang="fr" aria-pressed="false">Français</button>
+      <button type="button" data-lang="en" lang="en" aria-pressed="false">English</button>
+      <button type="button" data-lang="ar" lang="ar" aria-pressed="false">العربية</button>
+      <button type="button" data-lang="sw" lang="sw" aria-pressed="false">Kiswahili</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1 data-i18n="h">Einstufungstest: Welches Niveau passt zu dir?</h1>
+
+  <section id="start">
+    <p class="hinweis" data-i18n="intro">12 kurze Fragen, ungefähr 5 Minuten. Der Test gibt dir eine Orientierung und ist keine offizielle Prüfung. Die Fragen sind auf Deutsch, denn du testest dein Deutsch.</p>
+    <form id="start-form">
+      <label class="feld" for="vorname" data-i18n="name_l">Dein Vorname</label>
+      <input type="text" id="vorname" required maxlength="40" autocomplete="given-name">
+      <label class="zustimmung">
+        <input type="checkbox" id="zustimmung" required>
+        <span data-i18n="consent">Ich bin einverstanden, dass mein Vorname und mein Testergebnis per E-Mail an die Kursleitung gesendet werden.</span>
+      </label>
+      <button class="btn" type="submit" data-i18n="start">Test starten</button>
+    </form>
+  </section>
+
+  <section id="testbereich" hidden>
+    <form id="test-form" novalidate>
+      <div id="fragen"></div>
+      <p id="fehler" class="fehler" role="alert" hidden></p>
+      <button class="btn" type="submit" data-i18n="submit">Test auswerten</button>
+    </form>
+  </section>
+
+  <div id="ergebnis" class="ergebnis" role="status" aria-live="polite" hidden></div>
+</main>
+
+<script>
+  // Hier deinen kostenlosen Access Key von web3forms.com eintragen (siehe Anleitung)
+  const ACCESS_KEY = "DEIN_WEB3FORMS_ACCESS_KEY";
+
+  const fragen = [
+    ["Ich ___ Anna.", ["sind", "bin", "bist"], 1],
+    ["Wo ___ du?", ["wohne", "wohnst", "wohnen"], 1],
+    ["Das ist ___ Buch.", ["ein", "eine", "einen"], 0],
+    ["Gestern ___ ich ins Kino gegangen.", ["habe", "bin", "werde"], 1],
+    ["Ich fahre ___ dem Bus zur Arbeit.", ["bei", "zu", "mit"], 2],
+    ["Kannst du mir bitte das Salz ___?", ["gibst", "geben", "gegeben"], 1],
+    ["Weißt du, ___ der Zug schon abgefahren ist?", ["dass", "wenn", "ob"], 2],
+    ["Der Mann, ___ neben mir wohnt, ist Arzt.", ["den", "der", "dem"], 1],
+    ["Er hat sich ___ den Job beworben.", ["um", "für", "auf"], 0],
+    ["Hätte ich mehr Zeit gehabt, ___ ich die Reise gemacht.", ["wäre", "hätte", "würde"], 1],
+    ["Der Ausflug fiel ___ des schlechten Wetters aus.", ["trotz", "durch", "wegen"], 2],
+    ["Er tat so, ___ er nichts gehört hätte.", ["weil", "als ob", "obwohl"], 1]
+  ];
+  const stufen = [[3, "A1", "m1"], [6, "A2", "m2"], [9, "B1", "m3"], [12, "lvl4", "m4"]];
+
+  const T = {
+    de: {
+      title: "Einstufungstest", res_h: "Dein Ergebnis, {n}",
+      res_pts: "Du hast {n} von 12 Punkten.", res_lvl: "Empfohlenes Startniveau:", lvl4: "B2 oder höher",
+      m1: "Du startest am besten mit den Grundlagen: einfache Sätze, Alltag, Vorstellen.",
+      m2: "Du kennst die Grundlagen und kannst im Alltag aufbauen: Vergangenheit, Wegbeschreibung, Gespräche.",
+      m3: "Du kannst dich schon gut verständigen. Jetzt geht es um sichere Grammatik und freies Sprechen.",
+      m4: "Dein Deutsch ist fortgeschritten. Wir arbeiten an Feinheiten, Stil und Prüfungsvorbereitung.",
+      res_missing: "Bitte beantworte alle Fragen. Es fehlen noch {n}.",
+      sending: "Dein Ergebnis wird gesendet …", sent: "Dein Ergebnis wurde an die Kursleitung gesendet.",
+      failed: "Das Senden hat leider nicht geklappt. Bitte schreib mir dein Ergebnis per E-Mail.",
+      res_next: "Ich melde mich bei dir, um den passenden Kurs zu besprechen.", res_link: "Zur Anmeldung"
+    },
+    fr: {
+      title: "Test de niveau", back: "← Page d'accueil", h: "Test de niveau : quel niveau vous convient ?",
+      intro: "12 questions courtes, environ 5 minutes. Le test donne une indication et n'est pas un examen officiel. Les questions sont en allemand, car vous testez votre allemand.",
+      name_l: "Votre prénom", consent: "J'accepte que mon prénom et mon résultat soient envoyés par e-mail à l'enseignant.",
+      start: "Démarrer le test", submit: "Voir le résultat", res_h: "Votre résultat, {n}",
+      res_pts: "Vous avez obtenu {n} points sur 12.", res_lvl: "Niveau de départ conseillé :", lvl4: "B2 ou supérieur",
+      m1: "Le mieux est de commencer par les bases : phrases simples, vie quotidienne, se présenter.",
+      m2: "Vous connaissez les bases et pouvez construire sur le quotidien : passé, indiquer un chemin, conversations.",
+      m3: "Vous vous faites déjà bien comprendre. Il s'agit maintenant d'une grammaire sûre et de l'expression libre.",
+      m4: "Votre allemand est avancé. Nous travaillons les nuances, le style et la préparation aux examens.",
+      res_missing: "Veuillez répondre à toutes les questions. Il en manque encore {n}.",
+      sending: "Votre résultat est en cours d'envoi …", sent: "Votre résultat a été envoyé à l'enseignant.",
+      failed: "L'envoi n'a malheureusement pas fonctionné. Merci de m'écrire votre résultat par e-mail.",
+      res_next: "Je vous contacte pour choisir ensemble le cours adapté.", res_link: "Vers l'inscription"
+    },
+    en: {
+      title: "Placement test", back: "← Back to home page", h: "Placement test: which level suits you?",
+      intro: "12 short questions, about 5 minutes. The test gives you a rough guide and is not an official exam. The questions are in German, because you are testing your German.",
+      name_l: "Your first name", consent: "I agree that my first name and test result are sent by email to the course teacher.",
+      start: "Start test", submit: "Show my result", res_h: "Your result, {n}",
+      res_pts: "You scored {n} out of 12 points.", res_lvl: "Recommended starting level:", lvl4: "B2 or higher",
+      m1: "It is best to start with the basics: simple sentences, everyday life, introducing yourself.",
+      m2: "You know the basics and can build on everyday life: the past, giving directions, conversations.",
+      m3: "You can already communicate well. Now it is about secure grammar and speaking freely.",
+      m4: "Your German is advanced. We work on finer points, style and exam preparation.",
+      res_missing: "Please answer all questions. {n} still missing.",
+      sending: "Sending your result …", sent: "Your result has been sent to the course teacher.",
+      failed: "Sending unfortunately did not work. Please email me your result.",
+      res_next: "I will get in touch to discuss the right course with you.", res_link: "Go to sign-up"
+    },
+    ar: {
+      title: "اختبار تحديد المستوى", back: "← إلى الصفحة الرئيسية", h: "اختبار تحديد المستوى: أي مستوى يناسبك؟",
+      intro: "12 سؤالًا قصيرًا، نحو 5 دقائق. يمنحك الاختبار فكرة تقريبية وليس امتحانًا رسميًا. الأسئلة باللغة الألمانية لأنك تختبر لغتك الألمانية.",
+      name_l: "اسمك الأول", consent: "أوافق على إرسال اسمي الأول ونتيجة الاختبار بالبريد الإلكتروني إلى مدرّس الدورة.",
+      start: "ابدأ الاختبار", submit: "عرض النتيجة", res_h: "نتيجتك، {n}",
+      res_pts: "حصلت على {n} من 12 نقطة.", res_lvl: "المستوى المقترح للبداية:", lvl4: "B2 أو أعلى",
+      m1: "الأفضل أن تبدأ بالأساسيات: جمل بسيطة، وحياة يومية، والتعريف بالنفس.",
+      m2: "تعرف الأساسيات ويمكنك البناء عليها في الحياة اليومية: الماضي، والاستدلال على الطريق، والمحادثات.",
+      m3: "تستطيع التواصل جيدًا. والآن نركّز على القواعد الدقيقة والتحدث بحرية.",
+      m4: "لغتك الألمانية متقدمة. سنعمل على التفاصيل الدقيقة والأسلوب والتحضير للامتحانات.",
+      res_missing: "يرجى الإجابة عن جميع الأسئلة. بقي {n} منها.",
+      sending: "جارٍ إرسال نتيجتك …", sent: "تم إرسال نتيجتك إلى مدرّس الدورة.",
+      failed: "للأسف لم ينجح الإرسال. يُرجى إرسال نتيجتك إليّ بالبريد الإلكتروني.",
+      res_next: "سأتواصل معك لنختار معًا الدورة المناسبة.", res_link: "إلى التسجيل"
+    },
+    sw: {
+      title: "Jaribio la kupanga ngazi", back: "← Rudi ukurasa wa mwanzo", h: "Jaribio la kupanga ngazi: ni ngazi ipi inakufaa?",
+      intro: "Maswali 12 mafupi, takriban dakika 5. Jaribio hili linakupa mwongozo tu na si mtihani rasmi. Maswali yako kwa Kijerumani kwa sababu unapima Kijerumani chako.",
+      name_l: "Jina lako la kwanza", consent: "Nakubali jina langu la kwanza na matokeo ya jaribio yatumwe kwa barua pepe kwa mwalimu wa kozi.",
+      start: "Anza jaribio", submit: "Tazama matokeo", res_h: "Matokeo yako, {n}",
+      res_pts: "Umepata alama {n} kati ya 12.", res_lvl: "Ngazi inayopendekezwa ya kuanzia:", lvl4: "B2 au zaidi",
+      m1: "Ni vyema kuanza na misingi: sentensi rahisi, maisha ya kila siku, kujitambulisha.",
+      m2: "Unajua misingi na unaweza kuendelea na maisha ya kila siku: wakati uliopita, kuelekeza njia, mazungumzo.",
+      m3: "Tayari unaweza kuwasiliana vizuri. Sasa tunalenga sarufi sahihi na kuzungumza kwa uhuru.",
+      m4: "Kijerumani chako kiko juu. Tutafanyia kazi undani, mtindo na maandalizi ya mitihani.",
+      res_missing: "Tafadhali jibu maswali yote. Bado yamebaki {n}.",
+      sending: "Matokeo yako yanatumwa …", sent: "Matokeo yako yametumwa kwa mwalimu wa kozi.",
+      failed: "Samahani, kutuma hakukufanikiwa. Tafadhali nitumie matokeo yako kwa barua pepe.",
+      res_next: "Nitawasiliana nawe ili tuchague kozi inayofaa pamoja.", res_link: "Nenda kwenye usajili"
+    }
+  };
+
+  let L = "de", state = null, missing = 0;
+  const $ = id => document.getElementById(id);
+  const t = k => (T[L] && T[L][k]) || T.de[k] || k;
+  const esc = x => String(x).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  document.querySelectorAll("[data-i18n]").forEach(el => { T.de[el.dataset.i18n] = el.textContent; });
+
+  // Fragen aufbauen
+  fragen.forEach((f, i) => {
+    const fs = document.createElement("fieldset");
+    fs.className = "frage"; fs.lang = "de"; fs.dir = "ltr";
+    const lg = document.createElement("legend");
+    lg.textContent = (i + 1) + ". " + f[0];
+    fs.appendChild(lg);
+    const wrap = document.createElement("div");
+    wrap.className = "antworten";
+    f[1].forEach((opt, j) => {
+      const lb = document.createElement("label");
+      const inp = document.createElement("input");
+      inp.type = "radio"; inp.name = "f" + i; inp.value = j;
+      lb.appendChild(inp);
+      lb.appendChild(document.createTextNode(" " + opt));
+      wrap.appendChild(lb);
+    });
+    fs.appendChild(wrap);
+    $("fragen").appendChild(fs);
+  });
+
+  function render() {
+    const out = $("ergebnis");
+    if (!state) { out.hidden = true; return; }
+    const lvl = state.stufe[1] === "lvl4" ? t("lvl4") : state.stufe[1];
+    const msg = { sending: t("sending"), sent: t("sent") + " " + t("res_next"), failed: t("failed") }[state.status];
+    out.hidden = false;
+    out.innerHTML = "<h2>" + esc(t("res_h").replace("{n}", state.name)) + "</h2>" +
+      "<p>" + esc(t("res_pts").replace("{n}", state.punkte)) + "</p>" +
+      '<strong class="stufe">' + esc(t("res_lvl")) + " " + esc(lvl) + "</strong>" +
+      "<p>" + esc(t(state.stufe[2])) + "</p>" +
+      "<p>" + esc(msg) + "</p>" +
+      '<p><a href="index.html#anmeldung">' + esc(t("res_link")) + "</a></p>";
+  }
+
+  function setLang(l) {
+    if (!T[l]) l = "de";
+    L = l;
+    document.documentElement.lang = l;
+    document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+    document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+    document.title = t("title");
+    document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === l));
+    if (missing) { $("fehler").textContent = t("res_missing").replace("{n}", missing); }
+    render();
+    try { localStorage.setItem("sprache", l); } catch (e) {}
+  }
+  document.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+  try { const g = localStorage.getItem("sprache"); if (g && g !== "de") setLang(g); } catch (e) {}
+
+  let vorname = "";
+  $("start-form").addEventListener("submit", e => {
+    e.preventDefault();
+    vorname = $("vorname").value.trim();
+    if (!vorname || !$("zustimmung").checked) return;
+    $("start").hidden = true;
+    $("testbereich").hidden = false;
+    window.scrollTo(0, 0);
+  });
+
+  async function senden(punkte, stufe, antworten, fehler, proStufe) {
+    const level = stufe[1] === "lvl4" ? T.de.lvl4 : stufe[1];
+    const daten = {
+      access_key: ACCESS_KEY,
+      subject: "Einstufungstest: " + vorname + " – " + level + " (" + punkte + "/12, " + fehler.length + " Fehler)",
+      from_name: "Einstufungstest Webseite",
+      Vorname: vorname,
+      Punkte: punkte + " von 12",
+      Empfohlenes_Niveau: level,
+      Fehler_pro_Niveau: Object.keys(proStufe).map(k => k + ": " + proStufe[k] + " von 3").join("  |  "),
+      Sprache_der_Seite: L
+    };
+    if (fehler.length === 0) daten.Fehler = "Keine Fehler";
+    fehler.forEach((f, i) => { daten["Fehler_" + (i + 1)] = f; });
+    Object.assign(daten, antworten);
+    const r = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(daten)
+    });
+    const j = await r.json();
+    if (j.success !== true) console.error("Web3Forms:", j.message);
+    return j.success === true;
+  }
+
+  $("test-form").addEventListener("submit", async e => {
+    e.preventDefault();
+    let punkte = 0; missing = 0;
+    const niveaus = ["A1", "A1", "A1", "A2", "A2", "A2", "B1", "B1", "B1", "B2", "B2", "B2"];
+    const antworten = {}, fehler = [], proStufe = { A1: 0, A2: 0, B1: 0, B2: 0 };
+    fragen.forEach((f, i) => {
+      const g = document.querySelector('input[name="f' + i + '"]:checked');
+      if (!g) { missing++; return; }
+      const ok = Number(g.value) === f[2];
+      const nr = String(i + 1).padStart(2, "0");
+      if (ok) punkte++;
+      else {
+        proStufe[niveaus[i]]++;
+        fehler.push("Frage " + (i + 1) + " (" + niveaus[i] + "): " + f[0] + "  gewählt: " + f[1][g.value] + "  richtig: " + f[1][f[2]]);
+      }
+      antworten["Frage_" + nr + "_" + niveaus[i]] = f[0] + "  →  " + f[1][g.value] + (ok ? "  ✔ richtig" : "  ✘ FALSCH (richtig: " + f[1][f[2]] + ")");
+    });
+    const fe = $("fehler");
+    if (missing > 0) {
+      fe.hidden = false;
+      fe.textContent = t("res_missing").replace("{n}", missing);
+      return;
+    }
+    fe.hidden = true;
+    const stufe = stufen.find(x => punkte <= x[0]);
+    state = { name: vorname, punkte: punkte, stufe: stufe, status: "sending" };
+    $("testbereich").hidden = true;
+    render();
+    window.scrollTo(0, 0);
+    try { state.status = (await senden(punkte, stufe, antworten, fehler, proStufe)) ? "sent" : "failed"; }
+    catch (err) { state.status = "failed"; }
+    render();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+<title>A1 Abschlusstest 5</title>
+ 
+<style>
+ 
+:root{
+--tinte:#1b2a41;
+--papier:#f5f7fa;
+--sonne:#ffc83d;
+--meer:#1f7a8c;
+--weiss:#ffffff;
+--linie:#d5dce5;
+}
+ 
+*{
+box-sizing:border-box;
+}
+ 
+body{
+margin:0;
+background:var(--papier);
+font-family:"Segoe UI",sans-serif;
+color:var(--tinte);
+}
+ 
+.wrap{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+ 
+.card{
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+margin-bottom:20px;
+}
+ 
+h1,h2{
+margin-top:0;
+}
+ 
+input[type=text],
+input[type=email]{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:2px solid var(--linie);
+border-radius:10px;
+font-size:16px;
+}
+ 
+.btn{
+background:var(--tinte);
+color:white;
+border:none;
+padding:14px 25px;
+border-radius:999px;
+cursor:pointer;
+font-weight:bold;
+font-size:16px;
+}
+ 
+.btn:hover{
+background:#0f1a2b;
+}
+ 
+.frage{
+margin-bottom:25px;
+padding-bottom:15px;
+border-bottom:1px solid var(--linie);
+}
+ 
+.option{
+display:block;
+margin:8px 0;
+cursor:pointer;
+}
+ 
+.progress{
+width:100%;
+height:25px;
+background:#e4eaf2;
+border-radius:999px;
+overflow:hidden;
+margin:20px 0;
+}
+ 
+.bar{
+width:100%;
+height:100%;
+background:var(--sonne);
+}
+ 
+.ergebnis{
+text-align:center;
+}
+ 
+.level{
+font-size:42px;
+font-weight:bold;
+margin:15px 0;
+}
+ 
+.bestanden{
+color:green;
+font-size:30px;
+font-weight:bold;
+}
+ 
+.nichtbestanden{
+color:#c62828;
+font-size:30px;
+font-weight:bold;
+}
+ 
+a{
+color:var(--meer);
+text-decoration:none;
+font-weight:bold;
+}
+ 
+</style>
+ 
+</head>
+ 
+<body>
+ 
+<div class="wrap">
+ 
+<div class="card" id="start">
+ 
+<h1>🌱🏆 A1 Abschlusstest 5</h1>
+ 
+<p>
+Der schwierigste A1-Abschlusstest.
+<br>
+Geeignet als Vorbereitung auf das Niveau A2.
+</p>
+ 
+<label>👤 Vorname</label>
+<input type="text" id="vorname">
+ 
+<label>📧 E-Mail</label>
+<input type="email" id="email">
+ 
+<label>
+<input type="checkbox" id="zustimmung">
+Ich stimme der Speicherung und Übermittlung meines Ergebnisses zu.
+</label>
+ 
+<br><br>
+ 
+<button class="btn" onclick="starten()">
+🚀 Test starten
+</button>
+ 
+</div>
+ 
+<div class="card" id="test" style="display:none;">
+ 
+<h2>📚 A1 Abschlussprüfung</h2>
+ 
+<div class="progress">
+<div class="bar"></div>
+</div>
+ 
+<div id="fragen"></div>
+ 
+<button class="btn" onclick="auswerten()">
+✅ Test auswerten
+</button>
+ 
+</div>
+ 
+<div class="card" id="ergebnis" style="display:none;"></div>
+ 
+</div>
+ 
+<script>
+ 
+const ACCESS_KEY = "DEIN_WEB3FORMS_ACCESS_KEY";
+ 
+const fragen = [
+ 
+["Ich ___ gestern einen Film gesehen.",["habe","bin","wurde"],0],
+ 
+["Wir ___ morgen nach Berlin fahren.",["möchten","möchtet","möchte"],0],
+ 
+["Wann ___ du geboren?",["bist","hast","warst"],0],
+ 
+["Meine Schwester ___ im Krankenhaus.",["arbeitet","arbeiten","arbeitetet"],0],
+ 
+["Am Wochenende ___ wir Freunde besucht.",["haben","hat","hast"],0],
+ 
+["Kannst du mir bitte helfen ___?",["heute","heutet","heutigen"],0],
+ 
+["Der Bus fährt ___ 7:15 Uhr.",["um","an","von"],0],
+ 
+["Ich nehme Kaffee ___ Zucker.",["mit","für","zu"],0],
+ 
+["Wo ___ ihr gestern?",["wart","waren","seid"],0],
+ 
+["Er ___ jeden Abend Deutsch.",["lernt","lernen","lernst"],0],
+ 
+["Wir wohnen seit drei Jahren ___ Deutschland.",["in","nach","aus"],0],
+ 
+["Ich ___ gestern nicht arbeiten.",["konnte","kann","können"],0],
+ 
+["Meine Mutter hat Geburtstag ___ Mai.",["im","am","auf"],0],
+ 
+["Die Kinder spielen ___ Schule.",["vor der","auf den","unter die"],0],
+ 
+["Heute ist es kalt, deshalb ___ ich eine Jacke.",["trage","tragen","trägst"],0],
+ 
+["Ich habe Hunger und möchte etwas ___.",["essen","isst","esst"],0],
+ 
+["Der Supermarkt ist nicht weit. Man kann ___ zu Fuß gehen.",["dorthin","deshalb","morgen"],0],
+ 
+["Wie lange ___ du Deutsch?",["lernst","lernen","lernt"],0],
+ 
+["Wir ___ gestern sehr früh nach Hause gegangen.",["sind","haben","waren"],0],
+ 
+["Entschuldigung, ___ Sie mir helfen?",["können","kann","könnt"],0]
+ 
+];
+ 
+let vorname="";
+let email="";
+ 
+function starten(){
+ 
+vorname=document.getElementById("vorname").value.trim();
+email=document.getElementById("email").value.trim();
+ 
+if(!vorname){
+alert("Bitte Vorname eingeben.");
+return;
+}
+ 
+if(!email){
+alert("Bitte E-Mail eingeben.");
+return;
+}
+ 
+if(!document.getElementById("zustimmung").checked){
+alert("Bitte Zustimmung aktivieren.");
+return;
+}
+ 
+document.getElementById("start").style.display="none";
+document.getElementById("test").style.display="block";
+ 
+fragenAufbauen();
+}
+ 
+function fragenAufbauen(){
+ 
+let html="";
+ 
+fragen.forEach((frage,index)=>{
+ 
+html+=`
+<div class="frage">
+<h3>${index+1}. ${frage[0]}</h3>
+`;
+ 
+frage[1].forEach((antwort,aindex)=>{
+ 
+html+=`
+<label class="option">
+<input type="radio" name="f${index}" value="${aindex}">
+${antwort}
+</label>
+`;
+ 
+});
+ 
+html+=`</div>`;
+ 
+});
+ 
+document.getElementById("fragen").innerHTML=html;
+ 
+}
+ 
+async function auswerten(){
+ 
+let punkte=0;
+let offen=0;
+ 
+fragen.forEach((f,index)=>{
+ 
+const auswahl=document.querySelector(
+'input[name="f'+index+'"]:checked'
+);
+ 
+if(!auswahl){
+offen++;
+return;
+}
+ 
+if(Number(auswahl.value)===f[2]){
+punkte++;
+}
+ 
+});
+ 
+if(offen>0){
+alert("Bitte alle Fragen beantworten.");
+return;
+}
+ 
+const prozent=Math.round(
+(punkte/fragen.length)*100
+);
+ 
+const bestanden=prozent>=70;
+ 
+document.getElementById("test").style.display="none";
+document.getElementById("ergebnis").style.display="block";
+ 
+document.getElementById("ergebnis").innerHTML=`
+ 
+<div class="ergebnis">
+ 
+<h2>🏆 Ergebnis A1 Test 5</h2>
+ 
+<h3>${vorname}</h3>
+ 
+<div class="level">
+${prozent}%
+</div>
+ 
+<p>
+${punkte} von ${fragen.length} Punkten
+</p>
+ 
+<div class="${
+bestanden
+?
+"bestanden"
+:
+"nichtbestanden"
+}">
+${bestanden
+?
+"✅ Bestanden"
+:
+"❌ Nicht bestanden"}
+</div>
+ 
+<p>
+Niveau:
+<strong>A1</strong>
+</p>
+ 
+${
+bestanden
+?
+"<p>🎉 Hervorragend! Du bist bereit für A2.</p>"
+:
+"<p>📚 Wiederhole noch einige A1-Themen und versuche es erneut.</p>"
+}
+ 
+<br><br>
+ 
+<a href="index.html">
+🏠 Zur Startseite
+</a>
+ 
+</div>
+ 
+`;
+ 
+sendenErgebnis(
+punkte,
+prozent,
+bestanden
+);
+ 
+}
+ 
+async function sendenErgebnis(
+punkte,
+prozent,
+bestanden
+){
+ 
+try{
+ 
+await fetch(
+"https://api.web3forms.com/submit",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json",
+"Accept":"application/json"
+},
+body:JSON.stringify({
+ 
+access_key:ACCESS_KEY,
+ 
+subject:
+"A1 Abschlusstest 5 - " + vorname,
+ 
+Vorname:vorname,
+Email:email,
+ 
+Test:"A1 Abschlusstest 5",
+ 
+Punkte:
+punkte + "/" + fragen.length,
+ 
+Prozent:prozent,
+ 
+Ergebnis:
+bestanden
+?
+"Bestanden"
+:
+"Nicht bestanden"
+ 
+})
+}
+);
+ 
+}catch(error){
+ 
+console.log(error);
+ 
+}
+ 
+}
+ 
+</script>
+ 
+</body>
+</html>

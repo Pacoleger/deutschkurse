@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>B1 Abschlusstest 5</title>
+<style>
+:root{
+--tinte:#1b2a41;
+--papier:#f5f7fa;
+--sonne:#ffc83d;
+--meer:#1f7a8c;
+--weiss:#fff;
+--linie:#d5dce5;
+}
+*{box-sizing:border-box;}
+body{
+margin:0;
+background:var(--papier);
+font-family:"Segoe UI",sans-serif;
+color:var(--tinte);
+}
+.wrap{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+.card{
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+margin-bottom:20px;
+}
+h1,h2{margin-top:0;}
+input[type=text],
+input[type=email]{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:2px solid var(--linie);
+border-radius:10px;
+font-size:16px;
+}
+.btn{
+background:var(--tinte);
+color:white;
+border:none;
+padding:14px 25px;
+border-radius:999px;
+cursor:pointer;
+font-weight:bold;
+font-size:16px;
+}
+.btn:hover{background:#101d31;}
+.frage{
+margin-bottom:25px;
+padding-bottom:15px;
+border-bottom:1px solid var(--linie);
+}
+.option{
+display:block;
+margin:8px 0;
+cursor:pointer;
+}
+.progress{
+width:100%;
+height:25px;
+background:#e4eaf2;
+border-radius:999px;
+overflow:hidden;
+margin:20px 0;
+}
+.bar{
+width:100%;
+height:100%;
+background:var(--sonne);
+}
+.ergebnis{text-align:center;}
+.level{
+font-size:42px;
+font-weight:bold;
+margin:15px 0;
+}
+.bestanden{
+color:green;
+font-size:30px;
+font-weight:bold;
+}
+.nichtbestanden{
+color:#c62828;
+font-size:30px;
+font-weight:bold;
+}
+a{
+color:var(--meer);
+text-decoration:none;
+font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card" id="start">
+
+<h1>🚶‍♂️🏅 B1 Abschlusstest 5</h1>
+
+<p>
+Der anspruchsvollste B1-Abschlusstest. ⭐⭐⭐⭐⭐
+<br>
+Geeignet als Vorbereitung auf das Niveau B2
+sowie auf Prüfungen wie Goethe-Zertifikat B1 oder telc B1.
+<br>
+Schwerpunkte: Passiv mit Modalverben, Konjunktiv II
+der Vergangenheit, Partizipialkonstruktionen,
+komplexe Argumentation und differenzierter Wortschatz.
+</p>
+
+<label>👤 Vorname</label>
+<input type="text" id="vorname">
+
+<label>📧 E-Mail</label>
+<input type="email" id="email">
+
+<label>
+<input type="checkbox" id="zustimmung">
+Ich stimme der Speicherung und Übermittlung meines Ergebnisses zu.
+</label>
+
+<br><br>
+
+<button class="btn" onclick="starten()">
+🚀 Test starten
+</button>
+
+</div>
+
+<div class="card" id="test" style="display:none;">
+
+<h2>📚 B1 Abschlussprüfung</h2>
+
+<div class="progress">
+<div class="bar"></div>
+</div>
+
+<div id="fragen"></div>
+
+<button class="btn" onclick="auswerten()">
+✅ Test auswerten
+</button>
+
+</div>
+
+<div class="card" id="ergebnis" style="display:none;"></div>
+
+</div>
+
+<script>
+
+const ACCESS_KEY="DEIN_WEB3FORMS_ACCESS_KEY";
+
+const fragen=[
+
+["Das Formular ___ bis Freitag abgegeben werden.",["muss","musst","müssen"],0],
+
+["Die Rechnung hätte früher ___ werden müssen.",["bezahlt","bezahlen","bezahlt"],0],
+
+["Wenn ich damals anders ___ hätte, wäre alles leichter gewesen.",["entschieden","entscheiden","entscheide"],0],
+
+["Er sagte, er ___ die Prüfung leider nicht bestanden.",["habe","hat","hätte"],0],
+
+["Die in Berlin ___ Konferenz war ein großer Erfolg.",["stattgefundene","stattfindende","stattfindet"],0],
+
+["___ ich die Nachricht erhalten hatte, rief ich sofort zurück.",["Nachdem","Bevor","Während"],0],
+
+["Könnten Sie mir bitte Auskunft ___ , wann der Kurs beginnt?",["darüber geben","darüber geben","geben darüber"],1],
+
+["Die Aufgabe ___ von allen Teilnehmern gelöst werden.",["musste","musst","müssen"],0],
+
+["Ich bin der Ansicht, ___ man das Problem ernst nehmen sollte.",["dass","weil","ob"],0],
+
+["Je genauer man plant, ___ reibungsloser läuft das Projekt.",["desto","umso","je"],0],
+
+["Der Vortrag, ___ ich gestern gehört habe, war sehr inspirierend.",["den","dem","der"],0],
+
+["___ der widrigen Umstände konnte das Projekt abgeschlossen werden.",["Trotz","Wegen","Während"],0],
+
+["Ich habe mich damit ___ , die Unterlagen zu ordnen.",["beschäftigt","beschäftigen","beschäftigte"],0],
+
+["Es wäre besser gewesen, wir ___ früher angefangen.",["hätten","wären","würden"],0],
+
+["Die Ergebnisse ___ in der nächsten Sitzung präsentiert.",["werden","wird","werdet"],0],
+
+["Entweder wir einigen uns jetzt, ___ wir verschieben die Entscheidung.",["oder","aber","und"],0],
+
+["Sie hat mich gebeten, ihr ___ der Bewerbung zu helfen.",["bei","mit","für"],0],
+
+["___ ich ihn das letzte Mal sah, ging es ihm gut.",["Als","Wenn","Wann"],0],
+
+["Der Kunde, ___ wir das Angebot geschickt haben, hat noch nicht geantwortet.",["dem","den","der"],0],
+
+["Ich lasse die Unterlagen vom Anwalt ___ .",["prüfen","geprüft","prüfe"],0],
+
+["Das Thema ___ in der Diskussion leider nicht ausreichend behandelt.",["wurde","wird","werden"],0],
+
+["Ich hätte nicht gedacht, ___ die Prüfung so schwer wird.",["dass","weil","ob"],0],
+
+["Die Teilnehmer wurden gebeten, ihre Fragen ___ .",["zu stellen","stellen","gestellt"],0],
+
+["Meine Kollegin, ___ ich seit Jahren zusammenarbeite, wechselt die Firma.",["mit der","mit die","mit dem"],0],
+
+["Es handelt sich um ein Problem, ___ man nicht unterschätzen sollte.",["das","dem","den"],0]
+
+];
+
+let vorname="";
+let email="";
+
+function starten(){
+
+vorname=document.getElementById("vorname").value.trim();
+email=document.getElementById("email").value.trim();
+
+if(!vorname){
+alert("Bitte Vorname eingeben.");
+return;
+}
+
+if(!email){
+alert("Bitte E-Mail eingeben.");
+return;
+}
+
+if(!document.getElementById("zustimmung").checked){
+alert("Bitte Zustimmung aktivieren.");
+return;
+}
+
+document.getElementById("start").style.display="none";
+document.getElementById("test").style.display="block";
+
+fragenAufbauen();
+
+}
+
+function fragenAufbauen(){
+
+let html="";
+
+fragen.forEach((f,index)=>{
+
+html+=`
+<div class="frage">
+<h3>${index+1}. ${f[0]}</h3>
+`;
+
+f[1].forEach((antwort,aindex)=>{
+
+html+=`
+<label class="option">
+<input type="radio" name="f${index}" value="${aindex}">
+${antwort}
+</label>
+`;
+
+});
+
+html+=`</div>`;
+
+});
+
+document.getElementById("fragen").innerHTML=html;
+
+}
+
+async function auswerten(){
+
+let punkte=0;
+let offen=0;
+
+fragen.forEach((f,index)=>{
+
+const auswahl=document.querySelector(
+'input[name="f'+index+'"]:checked'
+);
+
+if(!auswahl){
+offen++;
+return;
+}
+
+if(Number(auswahl.value)===f[2]){
+punkte++;
+}
+
+});
+
+if(offen>0){
+alert("Bitte alle Fragen beantworten.");
+return;
+}
+
+const prozent=Math.round(
+(punkte/fragen.length)*100
+);
+
+const bestanden=prozent>=70;
+
+document.getElementById("test").style.display="none";
+document.getElementById("ergebnis").style.display="block";
+
+document.getElementById("ergebnis").innerHTML=`
+
+<div class="ergebnis">
+
+<h2>🏆 Ergebnis B1 Test 5</h2>
+
+<h3>${vorname}</h3>
+
+<div class="level">
+${prozent}%
+</div>
+
+<p>
+${punkte} von ${fragen.length} Punkten
+</p>
+
+<div class="${
+bestanden
+?
+"bestanden"
+:
+"nichtbestanden"
+}">
+${bestanden
+?
+"✅ Bestanden"
+:
+"❌ Nicht bestanden"}
+</div>
+
+<p>
+Niveau:
+<strong>B1</strong>
+</p>
+
+${
+bestanden
+?
+"<p>🎉 Hervorragend! Du bist bereit für das Niveau B2.</p>"
+:
+"<p>📚 Wiederhole die B1-Grammatik gründlich und versuche es erneut.</p>"
+}
+
+<br><br>
+
+<a href="index.html">
+🏠 Zur Startseite
+</a>
+
+</div>
+
+`;
+
+sendenErgebnis(
+punkte,
+prozent,
+bestanden
+);
+
+}
+
+async function sendenErgebnis(
+punkte,
+prozent,
+bestanden
+){
+
+try{
+
+await fetch(
+"https://api.web3forms.com/submit",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json",
+"Accept":"application/json"
+},
+body:JSON.stringify({
+
+access_key:ACCESS_KEY,
+
+subject:
+"B1 Abschlusstest 5 - " + vorname,
+
+Vorname:vorname,
+Email:email,
+
+Test:"B1 Abschlusstest 5",
+
+Punkte:
+punkte + "/" + fragen.length,
+
+Prozent:prozent,
+
+Ergebnis:
+bestanden
+?
+"Bestanden"
+:
+"Nicht bestanden"
+
+})
+}
+);
+
+}catch(error){
+
+console.log(error);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

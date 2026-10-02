@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C1 Abschlusstest 2</title>
+<style>
+:root{
+--tinte:#1b2a41;
+--papier:#f5f7fa;
+--sonne:#ffc83d;
+--meer:#1f7a8c;
+--weiss:#fff;
+--linie:#d5dce5;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--papier);font-family:"Segoe UI",sans-serif;color:var(--tinte);}
+.wrap{max-width:900px;margin:auto;padding:20px;}
+.card{background:white;padding:30px;border-radius:20px;box-shadow:0 8px 25px rgba(0,0,0,.08);margin-bottom:20px;}
+h1,h2{margin-top:0;}
+input[type=text],input[type=email]{width:100%;padding:12px;margin-bottom:15px;border:2px solid var(--linie);border-radius:10px;font-size:16px;}
+.btn{background:var(--tinte);color:white;border:none;padding:14px 25px;border-radius:999px;cursor:pointer;font-weight:bold;font-size:16px;}
+.btn:hover{background:#101d31;}
+.frage{margin-bottom:25px;padding-bottom:15px;border-bottom:1px solid var(--linie);}
+.option{display:block;margin:8px 0;cursor:pointer;}
+.progress{width:100%;height:25px;background:#e4eaf2;border-radius:999px;overflow:hidden;margin:20px 0;}
+.bar{width:100%;height:100%;background:var(--sonne);}
+.ergebnis{text-align:center;}
+.level{font-size:42px;font-weight:bold;margin:15px 0;}
+.bestanden{color:green;font-size:30px;font-weight:bold;}
+.nichtbestanden{color:#c62828;font-size:30px;font-weight:bold;}
+a{color:var(--meer);text-decoration:none;font-weight:bold;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card" id="start">
+
+<h1>🎓📗 C1 Abschlusstest 2</h1>
+
+<p>
+C1 Abschlussprüfung Variante 2 ⭐⭐
+<br>
+Schwerpunkte: Wirtschaft, Recht, Politik,
+Nominalstil und komplexe Argumentation.
+</p>
+
+<label>👤 Vorname</label>
+<input type="text" id="vorname">
+
+<label>📧 E-Mail</label>
+<input type="email" id="email">
+
+<label>
+<input type="checkbox" id="zustimmung">
+Ich stimme der Speicherung und Übermittlung meines Ergebnisses zu.
+</label>
+
+<br><br>
+
+<button class="btn" onclick="starten()">
+🚀 Test starten
+</button>
+
+</div>
+
+<div class="card" id="test" style="display:none;">
+
+<h2>📚 C1 Abschlussprüfung</h2>
+
+<div class="progress">
+<div class="bar"></div>
+</div>
+
+<div id="fragen"></div>
+
+<button class="btn" onclick="auswerten()">
+✅ Test auswerten
+</button>
+
+</div>
+
+<div class="card" id="ergebnis" style="display:none;"></div>
+
+</div>
+
+<script>
+
+const ACCESS_KEY="DEIN_WEB3FORMS_ACCESS_KEY";
+
+const fragen=[
+
+["Die in der Verordnung ___ Regelungen treten am 1. Januar in Kraft.",["festgelegten","festgelegte","festlegt"],0],
+
+["Es wäre wünschenswert, ___ man die Interessen aller Beteiligten berücksichtigte.",["wenn","dass","ob"],0],
+
+["Der Minister ließ verlauten, ___ die Reform noch in diesem Jahr verabschiedet werde.",["dass","weil","ob"],0],
+
+["___ der erheblichen Bedenken wurde das Gesetz verabschiedet.",["Trotz","Wegen","Während"],0],
+
+["Die Beiträge hätten rechtzeitig ___ werden müssen.",["entrichtet","entrichten","entrichtet"],0],
+
+["Es handelt sich um einen Tatbestand, ___ einer juristischen Bewertung bedarf.",["der","den","dem"],0],
+
+["Der Sachverständige führte aus, ___ die Risiken unterschätzt worden seien.",["dass","weil","ob"],0],
+
+["Je genauer die Verträge formuliert sind, ___ geringer ist das Konfliktpotenzial.",["desto","umso","je"],0],
+
+["Die Novelle, ___ kürzlich verabschiedet wurde, stieß auf breite Kritik.",["die","der","den"],0],
+
+["Man muss davon ausgehen, ___ sich die Lage weiter zuspitzt.",["dass","weil","ob"],0],
+
+["Die Betroffenen wurden aufgefordert, ihre Ansprüche geltend ___ .",["zu machen","machen","gemacht"],0],
+
+["___ man die Interessen gegeneinander abwägt, zeigt sich ein Ungleichgewicht.",["Wenn","Als","Wann"],0],
+
+["Die Zahl der Insolvenzen ___ im vergangenen Jahr deutlich zugenommen.",["hat","ist","wird"],0],
+
+["Es gilt, ___ tragfähigen Kompromiss zu finden.",["einen","eine","einem"],0],
+
+["Der Angeklagte behauptet, ___ er zur Tatzeit nicht am Tatort gewesen sei.",["dass","weil","ob"],0],
+
+["Ich lasse den Vertrag von einem Anwalt ___ .",["prüfen","geprüft","prüfe"],0],
+
+["Die Entscheidung ___ von der zuständigen Behörde getroffen.",["wurde","wird","werden"],0],
+
+["Ich habe mich ausführlich damit ___ , die Rechtslage zu klären.",["befasst","befassen","befasste"],0],
+
+["___ das Urteil verkündet worden war, herrschte betretenes Schweigen.",["Nachdem","Bevor","Während"],0],
+
+["Die Vorschriften ___ in dem Gesetzestext eindeutig formuliert.",["sind","ist","seid"],0],
+
+["Es wäre angezeigt, ___ man die Vorschriften überarbeitete.",["wenn","dass","ob"],0],
+
+["Die Kommission gelangt zu der Auffassung, ___ die Maßnahmen nicht ausreichten.",["dass","weil","ob"],0],
+
+["Der Antrag ___ innerhalb der Frist einzureichen.",["ist","wird","werden"],0],
+
+["___ der angespannten Lage blieb die Regierung handlungsfähig.",["Trotz","Wegen","Während"],0],
+
+["Die Verantwortung ___ letztlich beim Gesetzgeber.",["liegt","liegen","läge"],0]
+
+];
+
+let vorname="";
+let email="";
+
+function starten(){
+vorname=document.getElementById("vorname").value.trim();
+email=document.getElementById("email").value.trim();
+if(!vorname){alert("Bitte Vorname eingeben.");return;}
+if(!email){alert("Bitte E-Mail eingeben.");return;}
+if(!document.getElementById("zustimmung").checked){alert("Bitte Zustimmung aktivieren.");return;}
+document.getElementById("start").style.display="none";
+document.getElementById("test").style.display="block";
+fragenAufbauen();
+}
+
+function fragenAufbauen(){
+let html="";
+fragen.forEach((f,index)=>{
+html+=`<div class="frage"><h3>${index+1}. ${f[0]}</h3>`;
+f[1].forEach((antwort,aindex)=>{
+html+=`<label class="option"><input type="radio" name="f${index}" value="${aindex}">${antwort}</label>`;
+});
+html+=`</div>`;
+});
+document.getElementById("fragen").innerHTML=html;
+}
+
+async function auswerten(){
+let punkte=0;
+let offen=0;
+fragen.forEach((f,index)=>{
+const auswahl=document.querySelector('input[name="f'+index+'"]:checked');
+if(!auswahl){offen++;return;}
+if(Number(auswahl.value)===f[2]){punkte++;}
+});
+if(offen>0){alert("Bitte alle Fragen beantworten.");return;}
+const prozent=Math.round((punkte/fragen.length)*100);
+const bestanden=prozent>=70;
+document.getElementById("test").style.display="none";
+document.getElementById("ergebnis").style.display="block";
+document.getElementById("ergebnis").innerHTML=`
+<div class="ergebnis">
+<h2>🏆 Ergebnis C1 Test 2</h2>
+<h3>${vorname}</h3>
+<div class="level">${prozent}%</div>
+<p>${punkte} von ${fragen.length} Punkten</p>
+<div class="${bestanden?"bestanden":"nichtbestanden"}">
+${bestanden?"✅ Bestanden":"❌ Nicht bestanden"}
+</div>
+<p>Niveau: <strong>C1</strong></p>
+${bestanden?"<p>🎉 Sehr gut! Du hast C1 Test 2 bestanden.</p>":"<p>📚 Bitte übe weiter und versuche den Test erneut.</p>"}
+<br><br>
+<a href="index.html">🏠 Zur Startseite</a>
+</div>
+`;
+sendenErgebnis(punkte,prozent,bestanden);
+}
+
+async function sendenErgebnis(punkte,prozent,bestanden){
+try{
+await fetch("https://api.web3forms.com/submit",{
+method:"POST",
+headers:{"Content-Type":"application/json","Accept":"application/json"},
+body:JSON.stringify({
+access_key:ACCESS_KEY,
+subject:"C1 Abschlusstest 2 - "+vorname,
+Vorname:vorname,
+Email:email,
+Test:"C1 Abschlusstest 2",
+Punkte:punkte+"/"+fragen.length,
+Prozent:prozent,
+Ergebnis:bestanden?"Bestanden":"Nicht bestanden"
+})
+});
+}catch(error){console.log(error);}
+}
+
+</script>
+
+</body>
+</html>

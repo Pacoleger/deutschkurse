@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deutschkurse online</title>
+<meta name="description" content="Deutsch lernen für Erwachsene, Schülerinnen und Schüler und Geflüchtete. Online, von A1 bis C2.">
+<style>
+:root {
+  --tinte: #1b2a41;
+  --papier: #f5f7fa;
+  --sonne: #ffc83d;
+  --meer: #1f7a8c;
+  --weiss: #ffffff;
+  --linie: #d5dce5;
+  --text-gedaempft: #4a5a70;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--tinte);
+  font-family: "Avenir Next", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+a { color: var(--meer); }
+a:focus-visible, .btn:focus-visible, button:focus-visible {
+  outline: 3px solid var(--tinte);
+  outline-offset: 3px;
+}
+.wrap { max-width: 1060px; margin: 0 auto; padding: 0 1.25rem; }
+
+header { padding: 1.25rem 0; }
+header .wrap { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.marke { font-weight: 800; font-size: 1.15rem; text-decoration: none; color: var(--tinte); }
+nav { display: flex; gap: 1.5rem; }
+nav a { color: var(--tinte); text-decoration: none; font-weight: 600; }
+nav a:hover { text-decoration: underline; }
+
+.hero { padding: 3rem 0 2rem; }
+h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 1rem;
+}
+.hero p.lead { font-size: 1.15rem; max-width: 42em; margin: 0 0 1.5rem; color: var(--text-gedaempft); }
+
+.btn {
+  display: inline-block;
+  padding: 0.7rem 1.3rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid var(--tinte);
+  cursor: pointer;
+  font-size: 0.95rem;
+  background: transparent;
+  color: var(--tinte);
+}
+.btn-voll { background: var(--tinte); color: var(--weiss); }
+.btn-voll:hover { background: #0f1a2b; }
+.btn-leer:hover { background: var(--weiss); }
+.btn-gold { background: var(--sonne); border-color: var(--sonne); color: var(--tinte); }
+.btn-gold:hover { background: #ffd666; }
+
+section { padding: 2.5rem 0; }
+section.hell { background: var(--weiss); border-top: 1px solid var(--linie); border-bottom: 1px solid var(--linie); }
+h2 { font-size: clamp(1.5rem, 3.2vw, 2rem); margin: 0 0 1.5rem; letter-spacing: -0.01em; }
+h3 { font-size: 1.15rem; margin: 0 0 0.6rem; }
+h4 { font-size: 1rem; margin: 1.5rem 0 0.6rem; color: var(--text-gedaempft); text-transform: uppercase; letter-spacing: 1px; }
+
+.niveau-block {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,.06);
+  border: 1px solid var(--linie);
+}
+.niveau-kopf {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.niveau-titel {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.niveau-badge {
+  background: var(--tinte);
+  color: white;
+  font-weight: 800;
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  font-size: 1.2rem;
+}
+.niveau-beschreibung {
+  color: var(--text-gedaempft);
+  font-size: 0.95rem;
+}
+.test-reihe {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+.test-link {
+  display: inline-block;
+  padding: 0.6rem 1.1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 2px solid var(--meer);
+  color: var(--meer);
+  background: white;
+  transition: all 0.15s;
+}
+.test-link:hover { background: var(--meer); color: white; }
+.test-link.gesperrt {
+  border-color: var(--linie);
+  color: #b0b8c4;
+  cursor: not-allowed;
+  position: relative;
+}
+.test-link.gesperrt::after {
+  content: "🔒";
+  margin-left: 0.4rem;
+  font-size: 0.85rem;
+}
+.test-link.freigeschaltet {
+  border-color: green;
+  color: green;
+  background: #f0fff4;
+}
+.test-link.freigeschaltet::after {
+  content: "✓";
+  margin-left: 0.4rem;
+  font-weight: bold;
+}
+.test-link.erst-test {
+  border-color: var(--sonne);
+  background: var(--sonne);
+  color: var(--tinte);
+}
+.test-link.erst-test:hover { background: #ffd666; border-color: #ffd666; color: var(--tinte); }
+
+.premium-hinweis {
+  margin-top: 1rem;
+  padding: 0.8rem 1rem;
+  background: #fff8e1;
+  border-left: 4px solid var(--sonne);
+  border-radius: 8px;
+  font-size: 0.92rem;
+  color: var(--tinte);
+}
+.premium-hinweis button {
+  background: var(--tinte);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
+}
+.premium-hinweis button:hover { background: #0f1a2b; }
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal.offen { display: flex; }
+.modal-inhalt {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3);
+}
+.modal-inhalt h3 { margin-top: 0; }
+.modal-inhalt input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid var(--linie);
+  border-radius: 10px;
+  font-size: 16px;
+  margin: 1rem 0;
+  font-family: monospace;
+  text-align: center;
+  letter-spacing: 2px;
+}
+.modal-inhalt .fehler {
+  color: #c62828;
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+  display: none;
+}
+.modal-knoepfe { display: flex; gap: 0.6rem; justify-content: flex-end; }
+
+.anmeldung { background: var(--tinte); color: var(--weiss); }
+.anmeldung h2, .anmeldung p { color: var(--weiss); }
+.anmeldung .btn { background: var(--sonne); color: var(--tinte); border-color: var(--sonne); }
+.anmeldung .btn:hover { background: #ffd666; }
+
+footer { padding: 2rem 0; font-size: 0.95rem; color: var(--text-gedaempft); }
+footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+
+@media (max-width: 600px) {
+  .niveau-kopf { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="marke" href="#">Deutschkurse [Dein Name]</a>
+    <nav>
+      <a href="#kurse">Kurse</a>
+      <a href="#tests">Abschlusstests</a>
+      <a href="#zertifikate">Zertifikate</a>
+      <a href="#anmeldung">Kontakt</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>Deutsch lernen, das im Alltag funktioniert</h1>
+    <p class="lead">
+      Kleine Gruppen und Einzelunterricht für Erwachsene, Schülerinnen und Schüler
+      und Geflüchtete. Online, vom ersten Wort bis zum muttersprachlichen Niveau.
+      Teste dein Niveau kostenlos – der erste Abschlusstest jeder Stufe ist für alle frei.
+    </p>
+    <p>
+      <a class="btn btn-voll" href="#tests">Zu den Abschlusstests</a>
+      <a class="btn btn-leer" href="einstufungstest.html">Einstufungstest machen</a>
+    </p>
+  </div>
+</div>
+
+<section id="tests" class="hell">
+  <div class="wrap">
+    <h2>Abschlusstests von A1 bis C2</h2>
+    <p style="max-width:42em; color:var(--text-gedaempft); margin-bottom:2rem;">
+      Jede Stufe umfasst fünf Abschlusstests. <strong>Test 1 ist für alle kostenlos.</strong>
+      Die Tests 2 bis 5 sind exklusiv für Premium-Teilnehmer, die ich persönlich freischalte.
+      Wenn du einen Freischaltcode hast, kannst du ihn direkt hier eingeben.
+    </p>
+
+    <div id="niveauListe"></div>
+  </div>
+</section>
+
+<section id="zertifikate">
+  <div class="wrap">
+    <h2>Zertifikate</h2>
+    <p style="max-width:42em; color:var(--text-gedaempft); margin-bottom:1.5rem;">
+      Nach bestandenem Abschlusstest kannst du dir hier dein Zertifikat als PDF ausdrucken.
+      Gib deinen Namen ein und drucke die Seite mit <kbd>Strg+P</kbd>.
+    </p>
+    <p>
+      <a class="btn btn-leer" href="zertifikat_a1.html">A1 Zertifikat</a>
+      <a class="btn btn-leer" href="zertifikat_a2.html">A2 Zertifikat</a>
+      <a class="btn btn-leer" href="zertifikat_b1.html">B1 Zertifikat</a>
+      <a class="btn btn-leer" href="zertifikat_b2.html">B2 Zertifikat</a>
+      <a class="btn btn-leer" href="zertifikat_c1.html">C1 Zertifikat</a>
+      <a class="btn btn-leer" href="zertifikat_c2.html">C2 Zertifikat</a>
+    </p>
+  </div>
+</section>
+
+<section id="anmeldung" class="anmeldung">
+  <div class="wrap">
+    <h2>Premium freischalten</h2>
+    <p style="max-width:36em;">
+      Du möchtest alle fünf Tests pro Niveau machen und dein Zertifikat erhalten?
+      Schreib mir kurz, welches Niveau du brauchst. Ich schalte dich persönlich frei
+      und sende dir deinen Code.
+    </p>
+    <p>
+      <a class="btn" href="mailto:deine-adresse@beispiel.de?subject=Premium%20Freischaltung">E-Mail schreiben</a>
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 [Dein Name]</span>
+    <nav>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- Modal für Freischaltcode -->
+<div class="modal" id="modal">
+  <div class="modal-inhalt">
+    <h3 id="modalTitel">Premium freischalten</h3>
+    <p id="modalText">Gib deinen Freischaltcode für dieses Niveau ein.</p>
+    <div class="fehler" id="modalFehler">Falscher Code. Bitte prüfe deine Eingabe.</div>
+    <input type="text" id="codeEingabe" placeholder="Code eingeben" autocomplete="off">
+    <div class="modal-knoepfe">
+      <button class="btn btn-leer" onclick="modalSchliessen()">Abbrechen</button>
+      <button class="btn btn-voll" onclick="codePruefen()">Freischalten</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   HIER DIE PREMIUM-CODES FESTLEGEN
+   ------------------------------------------------------------
+   Ändere die Codes so, dass sie nur du kennst. Jeder Kunde
+   bekommt einen Code pro Niveau. Beispiel: Der Kunde kauft
+   "A2 Premium" und bekommt den Code "A2-2026-XY".
+   ============================================================ */
+const PREMIUM_CODES = {
+  A1: "A1-PREMIUM-2026",
+  A2: "A2-PREMIUM-2026",
+  B1: "B1-PREMIUM-2026",
+  B2: "B2-PREMIUM-2026",
+  C1: "C1-PREMIUM-2026",
+  C2: "C2-PREMIUM-2026"
+};
+
+/* Niveaus und Tests */
+const niveaus = [
+  { code:"A1", titel:"A1", emoji:"🌱", beschreibung:"Erste Wörter, Vorstellung, einfache Sätze" },
+  { code:"A2", titel:"A2", emoji:"🚶", beschreibung:"Alltag, Perfekt, Nebensätze, Reisen" },
+  { code:"B1", titel:"B1", emoji:"🚶‍♂️📘", beschreibung:"Meinung, Beruf, Gesellschaft, Medien" },
+  { code:"B2", titel:"B2", emoji:"🎓", beschreibung:"Wissenschaft, Wirtschaft, Argumentation" },
+  { code:"C1", titel:"C1", emoji:"🏛️", beschreibung:"Nominalstil, Idiomatik, gehobene Sprache" },
+  { code:"C2", titel:"C2", emoji:"🏛️🏅", beschreibung:"Muttersprachliches Niveau, Stilistik, Rhetorik" }
+];
+
+let aktuellesNiveau = null;
+
+/* Freischaltungen aus localStorage laden */
+function ladeFreischaltungen(){
+  try {
+    return JSON.parse(localStorage.getItem("premium_freigeschaltet") || "[]");
+  } catch(e) { return []; }
+}
+function speichereFreischaltung(code){
+  const liste = ladeFreischaltungen();
+  if (!liste.includes(code)) {
+    liste.push(code);
+    localStorage.setItem("premium_freigeschaltet", JSON.stringify(liste));
+  }
+}
+function istFreigeschaltet(code){
+  return ladeFreischaltungen().includes(code);
+}
+
+/* Liste aufbauen */
+function render(){
+  const container = document.getElementById("niveauListe");
+  container.innerHTML = "";
+
+  niveaus.forEach(n => {
+    const freigeschaltet = istFreigeschaltet(n.code);
+
+    const block = document.createElement("div");
+    block.className = "niveau-block";
+
+    const kopf = document.createElement("div");
+    kopf.className = "niveau-kopf";
+    kopf.innerHTML = `
+      <div class="niveau-titel">
+        <span class="niveau-badge">${n.emoji} ${n.titel}</span>
+        <span class="niveau-beschreibung">${n.beschreibung}</span>
+      </div>
+    `;
+    block.appendChild(kopf);
+
+    const reihe = document.createElement("div");
+    reihe.className = "test-reihe";
+
+    for (let i = 1; i <= 5; i++) {
+      const datei = n.code.toLowerCase() + "_test" + i + ".html";
+      const a = document.createElement("a");
+      a.textContent = n.titel + " Test " + i;
+      a.className = "test-link";
+
+      if (i === 1) {
+        a.classList.add("erst-test");
+        a.href = datei;
+      } else if (freigeschaltet) {
+        a.classList.add("freigeschaltet");
+        a.href = datei;
+      } else {
+        a.classList.add("gesperrt");
+        a.href = "javascript:void(0)";
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          oeffneModal(n.code);
+        });
+      }
+      reihe.appendChild(a);
+    }
+    block.appendChild(reihe);
+
+    if (!freigeschaltet) {
+      const hinweis = document.createElement("div");
+      hinweis.className = "premium-hinweis";
+      hinweis.innerHTML = `🔒 Die Tests 2 bis 5 für ${n.titel} sind Premium. 
+        <button onclick="oeffneModal('${n.code}')">Code eingeben</button>`;
+      block.appendChild(hinweis);
+    } else {
+      const hinweis = document.createElement("div");
+      hinweis.className = "premium-hinweis";
+      hinweis.style.background = "#e8f5e9";
+      hinweis.style.borderLeftColor = "green";
+      hinweis.innerHTML = `✅ Premium für ${n.titel} freigeschaltet. Alle fünf Tests sind verfügbar.`;
+      block.appendChild(hinweis);
+    }
+
+    container.appendChild(block);
+  });
+}
+
+/* Modal */
+function oeffneModal(niveauCode){
+  aktuellesNiveau = niveauCode;
+  document.getElementById("modalTitel").textContent = "Premium " + niveauCode + " freischalten";
+  document.getElementById("modalText").textContent = "Gib deinen Freischaltcode für das Niveau " + niveauCode + " ein.";
+  document.getElementById("modalFehler").style.display = "none";
+  document.getElementById("codeEingabe").value = "";
+  document.getElementById("modal").classList.add("offen");
+  setTimeout(() => document.getElementById("codeEingabe").focus(), 100);
+}
+function modalSchliessen(){
+  document.getElementById("modal").classList.remove("offen");
+  aktuellesNiveau = null;
+}
+function codePruefen(){
+  const eingabe = document.getElementById("codeEingabe").value.trim().toUpperCase();
+  const erwartet = (PREMIUM_CODES[aktuellesNiveau] || "").toUpperCase();
+
+  if (eingabe && eingabe === erwartet) {
+    speichereFreischaltung(aktuellesNiveau);
+    modalSchliessen();
+    render();
+    alert("✅ Premium für " + aktuellesNiveau + " freigeschaltet! Alle fünf Tests sind jetzt verfügbar.");
+  } else {
+    document.getElementById("modalFehler").style.display = "block";
+  }
+}
+
+document.getElementById("codeEingabe").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") codePruefen();
+});
+document.getElementById("modal").addEventListener("click", (e) => {
+  if (e.target.id === "modal") modalSchliessen();
+});
+
+render();
+</script>
+
+</body>
+</html>

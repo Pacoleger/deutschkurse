@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>B2 Abschlusstest 4</title>
+<style>
+:root{
+--tinte:#1b2a41;
+--papier:#f5f7fa;
+--sonne:#ffc83d;
+--meer:#1f7a8c;
+--weiss:#fff;
+--linie:#d5dce5;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--papier);font-family:"Segoe UI",sans-serif;color:var(--tinte);}
+.wrap{max-width:900px;margin:auto;padding:20px;}
+.card{background:white;padding:30px;border-radius:20px;box-shadow:0 8px 25px rgba(0,0,0,.08);margin-bottom:20px;}
+h1,h2{margin-top:0;}
+input[type=text],input[type=email]{width:100%;padding:12px;margin-bottom:15px;border:2px solid var(--linie);border-radius:10px;font-size:16px;}
+.btn{background:var(--tinte);color:white;border:none;padding:14px 25px;border-radius:999px;cursor:pointer;font-weight:bold;font-size:16px;}
+.btn:hover{background:#101d31;}
+.frage{margin-bottom:25px;padding-bottom:15px;border-bottom:1px solid var(--linie);}
+.option{display:block;margin:8px 0;cursor:pointer;}
+.progress{width:100%;height:25px;background:#e4eaf2;border-radius:999px;overflow:hidden;margin:20px 0;}
+.bar{width:100%;height:100%;background:var(--sonne);}
+.ergebnis{text-align:center;}
+.level{font-size:42px;font-weight:bold;margin:15px 0;}
+.bestanden{color:green;font-size:30px;font-weight:bold;}
+.nichtbestanden{color:#c62828;font-size:30px;font-weight:bold;}
+a{color:var(--meer);text-decoration:none;font-weight:bold;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card" id="start">
+
+<h1>🎓📕 B2 Abschlusstest 4</h1>
+
+<p>
+B2 Abschlussprüfung Variante 4 ⭐⭐⭐⭐
+<br>
+Schwerpunkte: Kultur, Geschichte, Literatur, Gesellschaft
+und differenzierter Ausdruck.
+</p>
+
+<label>👤 Vorname</label>
+<input type="text" id="vorname">
+
+<label>📧 E-Mail</label>
+<input type="email" id="email">
+
+<label>
+<input type="checkbox" id="zustimmung">
+Ich stimme der Speicherung und Übermittlung meines Ergebnisses zu.
+</label>
+
+<br><br>
+
+<button class="btn" onclick="starten()">
+🚀 Test starten
+</button>
+
+</div>
+
+<div class="card" id="test" style="display:none;">
+
+<h2>📚 B2 Abschlussprüfung</h2>
+
+<div class="progress">
+<div class="bar"></div>
+</div>
+
+<div id="fragen"></div>
+
+<button class="btn" onclick="auswerten()">
+✅ Test auswerten
+</button>
+
+</div>
+
+<div class="card" id="ergebnis" style="display:none;"></div>
+
+</div>
+
+<script>
+
+const ACCESS_KEY="DEIN_WEB3FORMS_ACCESS_KEY";
+
+const fragen=[
+
+["Die Werke Goethes ___ bis heute weltweit gelesen.",["werden","wird","werdet"],0],
+
+["Wenn die Geschichte anders verlaufen ___ , hätte sich Europa anders entwickelt.",["wäre","hätte","würde"],0],
+
+["Der Historiker betonte, ___ die Quellen unterschiedlich interpretiert würden.",["dass","weil","ob"],0],
+
+["Die in der Ausstellung ___ Bilder stammen aus dem 19. Jahrhundert.",["gezeigten","gezeigte","zeigt"],0],
+
+["___ der schwierigen Umstände entstand ein bedeutendes Werk.",["Trotz","Wegen","Während"],0],
+
+["Es handelt sich um eine Epoche, ___ viele Künstler prägte.",["die","der","dem"],0],
+
+["Die Tex

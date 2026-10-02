@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A2 Zertifikat</title>
+<style>
+:root{--tinte:#1b2a41;--papier:#f5f7fa;--sonne:#ffc83d;--meer:#1f7a8c;--weiss:#fff;--linie:#d5dce5;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--papier);font-family:"Segoe UI",sans-serif;color:var(--tinte);padding:30px 15px;}
+.steuerung{max-width:900px;margin:0 auto 20px;background:white;padding:20px;border-radius:16px;box-shadow:0 8px 25px rgba(0,0,0,.08);display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+.steuerung input{padding:10px;border:2px solid var(--linie);border-radius:10px;font-size:16px;flex:1;min-width:200px;}
+.steuerung button{background:var(--tinte);color:white;border:none;padding:12px 22px;border-radius:999px;cursor:pointer;font-weight:bold;font-size:15px;}
+.steuerung button:hover{background:#101d31;}
+.zertifikat{max-width:900px;margin:auto;background:white;padding:60px;border-radius:20px;box-shadow:0 12px 40px rgba(0,0,0,.12);border:12px double var(--sonne);position:relative;}
+.zertifikat::before{content:"";position:absolute;inset:20px;border:2px solid var(--linie);border-radius:12px;pointer-events:none;}
+.kopf{text-align:center;margin-bottom:40px;}
+.kopf .logo{font-size:48px;margin-bottom:10px;}
+.kopf h1{font-size:38px;letter-spacing:2px;margin:0;text-transform:uppercase;}
+.kopf .untertitel{color:var(--meer);font-size:16px;letter-spacing:3px;text-transform:uppercase;margin-top:6px;}
+.inhalt{text-align:center;font-size:18px;line-height:1.8;}
+.inhalt .name{font-size:36px;font-weight:bold;color:var(--tinte);margin:25px 0;border-bottom:2px solid var(--sonne);display:inline-block;padding:0 30px 8px;min-width:320px;}
+.niveau{font-size:72px;font-weight:bold;color:var(--meer);letter-spacing:6px;margin:20px 0;}
+.details{display:flex;justify-content:space-around;flex-wrap:wrap;gap:20px;margin-top:50px;padding-top:30px;border-top:1px solid var(--linie);font-size:14px;}
+.details div{text-align:center;}
+.details strong{display:block;font-size:16px;margin-bottom:4px;}
+.unterschrift{margin-top:50px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;font-size:14px;}
+.unterschrift div{flex:1;min-width:200px;text-align:center;}
+.unterschrift .linie{border-top:1px solid var(--tinte);margin-top:40px;padding-top:6px;}
+.hinweis{max-width:900px;margin:20px auto 0;text-align:center;color:#4a5a70;font-size:14px;}
+@media print{body{background:white;padding:0;}.steuerung{display:none;}.zertifikat{box-shadow:none;border-radius:0;margin:0;}}
+</style>
+</head>
+<body>
+
+<div class="steuerung">
+  <input type="text" id="name" placeholder="Name des Kursteilnehmers" value="">
+  <button onclick="aktualisieren()">Name übernehmen</button>
+  <button onclick="window.print()">Als PDF drucken</button>
+</div>
+
+<div class="zertifikat">
+  <div class="kopf">
+    <div class="logo">🚶</div>
+    <h1>Zertifikat</h1>
+    <div class="untertitel">Deutsch als Fremdsprache</div>
+  </div>
+
+  <div class="inhalt">
+    <p>Hiermit wird bescheinigt, dass</p>
+    <div class="name" id="anzeigeName">[Name]</div>
+    <p>den Abschlusstest der Stufe</p>
+    <div class="niveau">A2</div>
+    <p>erfolgreich bestanden hat.</p>
+
+    <div class="details">
+      <div><strong>Niveau</strong>A2 – Grundlagen</div>
+      <div><strong>Datum</strong><span id="datum"></span></div>
+      <div><strong>Zertifikatsnummer</strong><span id="nummer"></span></div>
+    </div>
+
+    <div class="unterschrift">
+      <div>
+        <div class="linie">[Dein Name], Kursleitung</div>
+      </div>
+      <div>
+        <div class="linie">Datum, Ort</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="hinweis">
+  Dieses Zertifikat bestätigt die Teilnahme am A2-Abschlusstest und ist kein offizielles Sprachdiplom.
+</p>
+
+<script>
+const heute = new Date();
+document.getElementById("datum").textContent = heute.toLocaleDateString("de-DE", {
+  day: "2-digit",
+  month: "long",
+  year: "numeric"
+});
+
+const zufall = Math.floor(1000 + Math.random() * 9000);
+document.getElementById("nummer").textContent =
+  "A2-" +
+  heute.getFullYear() +
+  String(heute.getMonth() + 1).padStart(2, "0") +
+  String(heute.getDate()).padStart(2, "0") +
+  "-" +
+  zufall;
+
+const params = new URLSearchParams(window.location.search);
+const nameParam = params.get("name");
+if (nameParam) {
+  document.getElementById("anzeigeName").textContent = nameParam;
+  document.getElementById("name").value = nameParam;
+}
+
+function aktualisieren() {
+  const n = document.getElementById("name").value.trim();
+  document.getElementById("anzeigeName").textContent = n || "[Name]";
+}
+</script>
+
+</body>
+</html>

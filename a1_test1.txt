@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+<title>A1 Abschlusstest 1</title>
+ 
+<style>
+ 
+:root{
+--tinte:#1b2a41;
+--papier:#f5f7fa;
+--sonne:#ffc83d;
+--weiss:#ffffff;
+--meer:#1f7a8c;
+--linie:#d5dce5;
+}
+ 
+*{
+box-sizing:border-box;
+}
+ 
+body{
+margin:0;
+background:var(--papier);
+font-family:"Segoe UI",sans-serif;
+color:var(--tinte);
+}
+ 
+.wrap{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+ 
+.card{
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+ 
+h1,h2{
+margin-top:0;
+}
+ 
+input[type=text],
+input[type=email]{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:2px solid var(--linie);
+border-radius:10px;
+font-size:16px;
+}
+ 
+.btn{
+background:var(--tinte);
+color:white;
+border:none;
+padding:14px 25px;
+border-radius:999px;
+cursor:pointer;
+font-weight:bold;
+font-size:16px;
+}
+ 
+.btn:hover{
+background:#0f1a2b;
+}
+ 
+.frage{
+margin-bottom:25px;
+padding-bottom:20px;
+border-bottom:1px solid var(--linie);
+}
+ 
+.frage h3{
+margin-bottom:10px;
+}
+ 
+.option{
+display:block;
+margin:8px 0;
+}
+ 
+.progress{
+width:100%;
+height:25px;
+background:#dfe6ef;
+border-radius:999px;
+overflow:hidden;
+margin:20px 0;
+}
+ 
+.bar{
+height:100%;
+width:0%;
+background:var(--sonne);
+transition:.3s;
+}
+ 
+.ergebnis{
+text-align:center;
+padding:30px;
+}
+ 
+.level{
+font-size:40px;
+font-weight:bold;
+}
+ 
+.bestanden{
+color:green;
+font-size:30px;
+font-weight:bold;
+}
+ 
+.nichtbestanden{
+color:red;
+font-size:30px;
+font-weight:bold;
+}
+ 
+</style>
+</head>
+ 
+<body>
+ 
+<div class="wrap">
+ 
+<div class="card" id="start">
+ 
+<h1>🌱 A1 Abschlusstest 1</h1>
+ 
+<p>
+Dieser Test überprüft die Kenntnisse des Niveaus A1.
+</p>
+ 
+<label>👤 Vorname</label>
+<input type="text" id="vorname" required>
+ 
+<label>📧 E-Mail</label>
+<input type="email" id="email" required>
+ 
+<label>
+<input type="checkbox" id="zustimmung">
+Ich stimme der Übermittlung meines Ergebnisses zu.
+</label>
+ 
+<br><br>
+ 
+<button class="btn" onclick="starten()">
+🚀 Test starten
+</button>
+ 
+</div>
+ 
+<div class="card" id="test" style="display:none;">
+ 
+<h2>📚 A1 Abschlussprüfung</h2>
+ 
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+ 
+<div id="fragen"></div>
+ 
+<button class="btn" onclick="auswerten()">
+✅ Test auswerten
+</button>
+ 
+</div>
+ 
+<div class="card" id="ergebnis" style="display:none;"></div>
+ 
+</div>
+ 
+<script>
+ 
+const ACCESS_KEY = "DEIN_WEB3FORMS_ACCESS_KEY";
+ 
+const fragen=[
+ 
+["Ich ___ Anna.",["bin","bist","ist"],0],
+["Du ___ in Berlin.",["wohne","wohnst","wohnen"],1],
+["Wir ___ Deutsch.",["lernen","lernt","lernst"],0],
+["Das ist ___ Auto.",["ein","eine","einen"],0],
+["Heute ___ Montag.",["ist","sind","sein"],0],
+ 
+["Ich habe ___ Hund.",["ein","eine","einer"],0],
+["Wo ___ du?",["wohne","wohnst","wohnt"],1],
+["Er ___ in Hamburg.",["lebt","leben","lebst"],0],
+["Wir gehen ___ Schule.",["in die","auf die","bei die"],0],
+["Das Buch ist ___ Tisch.",["auf dem","in dem","an dem"],0],
+ 
+["Ich komme ___ Deutschland.",["aus","von","in"],0],
+["Sie ___ Kaffee.",["trinkt","trinken","trinkst"],0],
+["___ du Fußball?",["Spielst","Spielt","Spielen"],0],
+["Ich habe heute ___ Zeit.",["keine","kein","keinen"],0],
+["Das Wetter ist ___ .",["schön","Schule","laufen"],0],
+ 
+["Morgen ___ ich arbeiten.",["werde","habe","bin"],0],
+["Meine Mutter ___ Lehrerin.",["ist","sind","sein"],0],
+["Wir ___ am Wochenende einkaufen.",["gehen","geht","gehst"],0],
+["Ich esse Brot ___ Käse.",["mit","für","bei"],0],
+["Wie ___ du?",["heißt","heißt es","heißt du"],2]
+ 
+];
+ 
+let vorname="";
+let email="";
+ 
+function starten(){
+ 
+vorname=document.getElementById("vorname").value.trim();
+email=document.getElementById("email").value.trim();
+ 
+if(!vorname){
+alert("Vorname eingeben.");
+return;
+}
+ 
+if(!email){
+alert("E-Mail eingeben.");
+return;
+}
+ 
+if(!document.getElementById("zustimmung").checked){
+alert("Bitte Zustimmung aktivieren.");
+return;
+}
+ 
+document.getElementById("start").style.display="none";
+document.getElementById("test").style.display="block";
+ 
+fragenAufbauen();
+}
+ 
+function fragenAufbauen(){
+ 
+let html="";
+ 
+fragen.forEach((f,index)=>{
+ 
+html+=`
+<div class="frage">
+<h3>${index+1}. ${f[0]}</h3>
+`;
+ 
+f[1].forEach((antwort,aindex)=>{
+ 
+html+=`
+<label class="option">
+<input type="radio" name="f${index}" value="${aindex}">
+${antwort}
+</label>
+`;
+ 
+});
+ 
+html+=`</div>`;
+ 
+});
+ 
+document.getElementById("fragen").innerHTML=html;
+ 
+document.getElementById("bar").style.width="100%";
+}
+ 
+async function auswerten(){
+ 
+let punkte=0;
+let unbeantwortet=0;
+ 
+fragen.forEach((f,index)=>{
+ 
+const auswahl=document.querySelector(
+'input[name="f'+index+'"]:checked'
+);
+ 
+if(!auswahl){
+unbeantwortet++;
+return;
+}
+ 
+if(Number(auswahl.value)===f[2]){
+punkte++;
+}
+ 
+});
+ 
+if(unbeantwortet>0){
+alert("Bitte alle Fragen beantworten.");
+return;
+}
+ 
+const prozent=Math.round(
+(punkte/fragen.length)*100
+);
+ 
+const bestanden=prozent>=70;
+ 
+let icon=bestanden ? "🏆" : "📚";
+ 
+document.getElementById("test").style.display="none";
+ 
+document.getElementById("ergebnis").style.display="block";
+ 
+document.getElementById("ergebnis").innerHTML=`
+ 
+<div class="ergebnis">
+ 
+<h2>${icon} Ergebnis</h2>
+ 
+<h3>${vorname}</h3>
+ 
+<div class="level">
+${prozent} %
+</div>
+ 
+<p>
+${punkte} von ${fragen.length} Punkten
+</p>
+ 
+<div class="${
+bestanden
+?
+"bestanden"
+:
+"nichtbestanden"
+}">
+${bestanden ? "✅ Bestanden" : "❌ Nicht bestanden"}
+</div>
+ 
+<p>
+ 
+Niveau:
+<strong>A1</strong>
+ 
+</p>
+ 
+${
+bestanden
+?
+"<p>🎉 Herzlichen Glückwunsch!</p>"
+:
+"<p>📚 Bitte wiederhole die A1-Inhalte und versuche es erneut.</p>"
+}
+ 
+<br>
+ 
+<a href="index.html">
+🏠 Zur Startseite
+</a>
+ 
+</div>
+`;
+ 
+sendenErgebnis(
+punkte,
+prozent,
+bestanden
+);
+ 
+}
+ 
+async function sendenErgebnis(
+punkte,
+prozent,
+bestanden
+){
+ 
+try{
+ 
+await fetch(
+"https://api.web3forms.com/submit",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json",
+"Accept":"application/json"
+},
+body:JSON.stringify({
+ 
+access_key:ACCESS_KEY,
+ 
+subject:
+"A1 Abschlusstest 1 - "+
+vorname,
+ 
+Vorname:vorname,
+Email:email,
+ 
+Test:"A1 Abschlusstest 1",
+ 
+Punkte:punkte+
+"/"+
+fragen.length,
+ 
+Prozent:prozent,
+ 
+Ergebnis:
+bestanden
+?
+"Bestanden"
+:
+"Nicht bestanden"
+ 
+})
+}
+);
+ 
+}catch(err){
+ 
+console.log(err);
+ 
+}
+ 
+}
+ 
+</script>
+ 
+</body>
+</html>

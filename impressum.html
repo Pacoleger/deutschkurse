@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Impressum</title>
+  <style>
+    :root { --tinte:#1b2a41; --papier:#f5f7fa; --sonne:#ffc83d; --meer:#1f7a8c; --gedaempft:#4a5a70; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--papier); color:var(--tinte); font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,Roboto,sans-serif; font-size:1.0625rem; line-height:1.6; }
+    a { color: var(--meer); }
+    a:focus-visible { outline:3px solid var(--tinte); outline-offset:3px; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 1.25rem; }
+    .kopf { display:flex; align-items:center; gap:1.2rem; margin: 1.5rem 0 1rem; }
+    .foto { width:96px; height:96px; border-radius:50%; object-fit:cover; border:3px solid var(--sonne); flex:none; }
+    h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin:0; }
+    h2 { font-size:1.2rem; margin: 2rem 0 0.3rem; }
+    p { margin: 0 0 0.5rem; }
+    footer { margin-top: 3rem; color: var(--gedaempft); font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <a href="index.html">← Zur Startseite</a>
+
+  <div class="kopf">
+    <img class="foto" src="profil.jpg" width="96" height="96" alt="Foto von [Dein Name]">
+    <h1>Impressum</h1>
+  </div>
+
+  <!-- Alle Angaben in eckigen Klammern durch deine echten Daten ersetzen -->
+  <h2>Angaben gemäß § 5 DDG</h2>
+  <p>[Vor- und Nachname]<br>
+     [Straße und Hausnummer]<br>
+     [PLZ und Ort]</p>
+
+  <h2>Kontakt</h2>
+  <p>E-Mail: <a href="mailto:deine-adresse@beispiel.de">[deine-adresse@beispiel.de]</a><br>
+     Telefon: [Telefonnummer]</p>
+
+  <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+  <p>[Vor- und Nachname, Anschrift wie oben]</p>
+
+  <h2>Umsatzsteuer</h2>
+  <p>[Umsatzsteuer-Identifikationsnummer nach § 27a UStG, falls vorhanden. Sonst diesen Abschnitt löschen.]</p>
+
+  <footer>
+    <a href="datenschutz.html">Datenschutz</a>
+  </footer>
+</div>
+</body>
+</html>

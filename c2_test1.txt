@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C2 Abschlusstest 1</title>
+<style>
+:root{
+--tinte:#1b2a41;
+--papier:#f5f7fa;
+--sonne:#ffc83d;
+--meer:#1f7a8c;
+--weiss:#fff;
+--linie:#d5dce5;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--papier);font-family:"Segoe UI",sans-serif;color:var(--tinte);}
+.wrap{max-width:900px;margin:auto;padding:20px;}
+.card{background:white;padding:30px;border-radius:20px;box-shadow:0 8px 25px rgba(0,0,0,.08);margin-bottom:20px;}
+h1,h2{margin-top:0;}
+input[type=text],input[type=email]{width:100%;padding:12px;margin-bottom:15px;border:2px solid var(--linie);border-radius:10px;font-size:16px;}
+.btn{background:var(--tinte);color:white;border:none;padding:14px 25px;border-radius:999px;cursor:pointer;font-weight:bold;font-size:16px;}
+.btn:hover{background:#101d31;}
+.frage{margin-bottom:25px;padding-bottom:15px;border-bottom:1px solid var(--linie);}
+.option{display:block;margin:8px 0;cursor:pointer;}
+.progress{width:100%;height:25px;background:#e4eaf2;border-radius:999px;overflow:hidden;margin:20px 0;}
+.bar{width:100%;height:100%;background:var(--sonne);}
+.ergebnis{text-align:center;}
+.level{font-size:42px;font-weight:bold;margin:15px 0;}
+.bestanden{color:green;font-size:30px;font-weight:bold;}
+.nichtbestanden{color:#c62828;font-size:30px;font-weight:bold;}
+a{color:var(--meer);text-decoration:none;font-weight:bold;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card" id="start">
+
+<h1>🏛️📘 C2 Abschlusstest 1</h1>
+
+<p>
+Dieser Test überprüft Kenntnisse auf Niveau C2.
+<br>
+Schwerpunkte: Idiomatik, feine Bedeutungsnuancen,
+Stilistik, gehobene Schriftsprache und
+literarische Ausdrucksformen.
+</p>
+
+<label>👤 Vorname</label>
+<input type="text" id="vorname">
+
+<label>📧 E-Mail</label>
+<input type="email" id="email">
+
+<label>
+<input type="checkbox" id="zustimmung">
+Ich stimme der Speicherung und Übermittlung meines Ergebnisses zu.
+</label>
+
+<br><br>
+
+<button class="btn" onclick="starten()">
+🚀 Test starten
+</button>
+
+</div>
+
+<div class="card" id="test" style="display:none;">
+
+<h2>📚 C2 Abschlussprüfung</h2>
+
+<div class="progress">
+<div class="bar"></div>
+</div>
+
+<div id="fragen"></div>
+
+<button class="btn" onclick="auswerten()">
+✅ Test auswerten
+</button>
+
+</div>
+
+<div class="card" id="ergebnis" style="display:none;"></div>
+
+</div>
+
+<script>
+
+const ACCESS_KEY="DEIN_WEB3FORMS_ACCESS_KEY";
+
+const fragen=[
+
+["Er hat sich mit dieser Äußerung kein ___ gestellt.",["gutes Zeugnis","gutes Bein","gutes Haar"],0],
+
+["Die Verhandlungen sind ___ , bevor sie richtig begonnen haben.",["ins Wasser gefallen","im Sande verlaufen","auf die Nase gefallen"],1],
+
+["Sie hat sich die Sache gründlich durch den ___ gehen lassen.",["Magen","Kopf","Sinn"],0],
+
+["Was du da sagst, ist nicht ___ und nicht ___ .",["Hand noch Fuß","Salz noch Brot","Fisch noch Fleisch"],2],
+
+["Er hat die Situation ___ unterschätzt.",["aufs Äußerste","aufs Schärfste","aufs Gröbste"],0],
+
+["Der Autor ___ in seinem Werk die Grenzen zwischen Fiktion und Realität.",["verwischt","verschwimmt","verwechselt"],0],
+
+["Diese Argumentation ist ___ haltlos.",["schlichtweg","schlechthin","kurzerhand"],0],
+
+["Man kann ihm nicht ___ , dass er sich bemüht hätte.",["absprechen","ansprechen","besprechen"],0],
+
+["Der Vorwurf ___ jeder Grundlage.",["entbehrt","ermangelt","entbehrt sich"],0],
+
+["Ihr Verhalten war schlichtweg ___ .",["inakzeptabel","unannehmbar","unhaltbar"],0],
+
+["Die Kritik ist insofern berechtigt, ___ sie auf Fakten beruht.",["als","dass","weil"],0],
+
+["Der Redner verstand es, die Zuhörer ___ seinen Bann zu ziehen.",["in","auf","unter"],0],
+
+["Was er sagt, ist ___ , aber nicht unbedingt neu.",["zutreffend","treffend","zutrefflich"],0],
+
+["Die Maßnahme ___ auf breite Ablehnung.",["stieß","traf","fand"],0],
+
+["Man muss ihm zugute ___ , dass er unter schwierigen Bedingungen arbeitete.",["halten","kommen","bringen"],0],
+
+["Der Autor lässt die Figur ___ Ende verzweifeln.",["am","im","zum"],0],
+
+["Die Diskussion ___ in einer Sackgasse.",["endete","mündete","verlief"],0],
+
+["Diese Theorie ist mittlerweile ___ .",["überholt","überhört","übersehen"],0],
+
+["Sie hat die Kritik ___ genommen.",["persönlich","privat","eigen"],0],
+
+["Der Vorschlag ___ einiges für sich.",["hat","bringt","besitzt"],0],
+
+["Er hat die Gelegenheit ___ Schopfe gepackt.",["beim","am","im"],0],
+
+["Die Entscheidung ist nicht länger ___-zuhalten.",["aufrecht","aufrecht","aufrecht"],0],
+
+["Das Argument ist nicht ___-haltbar.",["stich","stand","stich"],0],
+
+["Man sollte nicht ___ voreiligen Schlüssen kommen.",["zu","auf","in"],0],
+
+["Die Darstellung ___ der historischen Wirklichkeit.",["entbehrt","widerspricht","ermangelt"],0]
+
+];
+
+let vorname="";
+let email="";
+
+function starten(){
+vorname=document.getElementById("vorname").value.trim();
+email=document.getElementById("email").value.trim();
+if(!vorname){alert("Bitte Vorname eingeben.");return;}
+if(!email){alert("Bitte E-Mail eingeben.");return;}
+if(!document.getElementById("zustimmung").checked){alert("Bitte Zustimmung aktivieren.");return;}
+document.getElementById("start").style.display="none";
+document.getElementById("test").style.display="block";
+fragenAufbauen();
+}
+
+function fragenAufbauen(){
+let html="";
+fragen.forEach((f,index)=>{
+html+=`<div class="frage"><h3>${index+1}. ${f[0]}</h3>`;
+f[1].forEach((antwort,aindex)=>{
+html+=`<label class="option"><input type="radio" name="f${index}" value="${aindex}">${antwort}</label>`;
+});
+html+=`</div>`;
+});
+document.getElementById("fragen").innerHTML=html;
+}
+
+async function auswerten(){
+let punkte=0;
+let offen=0;
+fragen.forEach((f,index)=>{
+const auswahl=document.querySelector('input[name="f'+index+'"]:checked');
+if(!auswahl){offen++;return;}
+if(Number(auswahl.value)===f[2]){punkte++;}
+});
+if(offen>0){alert("Bitte alle Fragen beantworten.");return;}
+const prozent=Math.round((punkte/fragen.length)*100);
+const bestanden=prozent>=70;
+document.getElementById("test").style.display="none";
+document.getElementById("ergebnis").style.display="block";
+document.getElementById("ergebnis").innerHTML=`
+<div class="ergebnis">
+<h2>🏆 Ergebnis C2 Test 1</h2>
+<h3>${vorname}</h3>
+<div class="level">${prozent}%</div>
+<p>${punkte} von ${fragen.length} Punkten</p>
+<div class="${bestanden?"bestanden":"nichtbestanden"}">
+${bestanden?"✅ Bestanden":"❌ Nicht bestanden"}
+</div>
+<p>Niveau: <strong>C2</strong></p>
+${bestanden?"<p>🎉 Glückwunsch! Du hast C2 Test 1 bestanden.</p>":"<p>📚 Bitte wiederhole die C2-Themen und versuche es erneut.</p>"}
+<br><br>
+<a href="index.html">🏠 Zur Startseite</a>
+</div>
+`;
+sendenErgebnis(punkte,prozent,bestanden);
+}
+
+async function sendenErgebnis(punkte,prozent,bestanden){
+try{
+await fetch("https://api.web3forms.com/submit",{
+method:"POST",
+headers:{"Content-Type":"application/json","Accept":"application/json"},
+body:JSON.stringify({
+access_key:ACCESS_KEY,
+subject:"C2 Abschlusstest 1 - "+vorname,
+Vorname:vorname,
+Email:email,
+Test:"C2 Abschlusstest 1",
+Punkte:punkte+"/"+fragen.length,
+Prozent:prozent,
+Ergebnis:bestanden?"Bestanden":"Nicht bestanden"
+})
+});
+}catch(error){console.log(error);}
+}
+
+</script>
+
+</body>
+</html>

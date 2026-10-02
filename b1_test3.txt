@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>B1 Abschlusstest 3</title>
+<style>
+:root{
+--tinte:#1b2a41;
+--papier:#f5f7fa;
+--sonne:#ffc83d;
+--meer:#1f7a8c;
+--weiss:#fff;
+--linie:#d5dce5;
+}
+*{box-sizing:border-box;}
+body{
+margin:0;
+background:var(--papier);
+font-family:"Segoe UI",sans-serif;
+color:var(--tinte);
+}
+.wrap{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+.card{
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+margin-bottom:20px;
+}
+h1,h2{margin-top:0;}
+input[type=text],
+input[type=email]{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:2px solid var(--linie);
+border-radius:10px;
+font-size:16px;
+}
+.btn{
+background:var(--tinte);
+color:white;
+border:none;
+padding:14px 25px;
+border-radius:999px;
+cursor:pointer;
+font-weight:bold;
+font-size:16px;
+}
+.btn:hover{background:#101d31;}
+.frage{
+margin-bottom:25px;
+padding-bottom:15px;
+border-bottom:1px solid var(--linie);
+}
+.option{
+display:block;
+margin:8px 0;
+cursor:pointer;
+}
+.progress{
+width:100%;
+height:25px;
+background:#e4eaf2;
+border-radius:999px;
+overflow:hidden;
+margin:20px 0;
+}
+.bar{
+width:100%;
+height:100%;
+background:var(--sonne);
+}
+.ergebnis{text-align:center;}
+.level{
+font-size:42px;
+font-weight:bold;
+margin:15px 0;
+}
+.bestanden{
+color:green;
+font-size:30px;
+font-weight:bold;
+}
+.nichtbestanden{
+color:#c62828;
+font-size:30px;
+font-weight:bold;
+}
+a{
+color:var(--meer);
+text-decoration:none;
+font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card" id="start">
+
+<h1>🚶‍♂️📙 B1 Abschlusstest 3</h1>
+
+<p>
+B1 Abschlussprüfung Variante 3 ⭐⭐⭐
+<br>
+Schwerpunkte: Gesellschaft, Umwelt, Medien,
+Argumentation, Meinungsäußerung und komplexe Satzstrukturen.
+</p>
+
+<label>👤 Vorname</label>
+<input type="text" id="vorname">
+
+<label>📧 E-Mail</label>
+<input type="email" id="email">
+
+<label>
+<input type="checkbox" id="zustimmung">
+Ich stimme der Speicherung und Übermittlung meines Ergebnisses zu.
+</label>
+
+<br><br>
+
+<button class="btn" onclick="starten()">
+🚀 Test starten
+</button>
+
+</div>
+
+<div class="card" id="test" style="display:none;">
+
+<h2>📚 B1 Abschlussprüfung</h2>
+
+<div class="progress">
+<div class="bar"></div>
+</div>
+
+<div id="fragen"></div>
+
+<button class="btn" onclick="auswerten()">
+✅ Test auswerten
+</button>
+
+</div>
+
+<div class="card" id="ergebnis" style="display:none;"></div>
+
+</div>
+
+<script>
+
+const ACCESS_KEY="DEIN_WEB3FORMS_ACCESS_KEY";
+
+const fragen=[
+
+["Ich bin der Meinung, ___ man mehr für den Umweltschutz tun sollte.",["dass","weil","ob"],0],
+
+["Der Müll ___ jede Woche abgeholt.",["wird","werden","werdet"],0],
+
+["Er sagte, er ___ sich für Politik.",["interessiere","interessiert","interessierte"],0],
+
+["Wenn wir weniger Auto fahren ___, wäre die Luft besser.",["würden","werden","wurden"],0],
+
+["Die Zeitung, ___ ich jeden Morgen lese, ist sehr gut.",["die","der","den"],0],
+
+["___ der steigenden Preise kaufen viele Menschen weniger.",["Wegen","Trotz","Während"],0],
+
+["Ich habe mich entschieden, ___ ich weniger Plastik benutze.",["dass","weil","ob"],0],
+
+["Könnten Sie mir bitte erklären, ___ das System funktioniert?",["wie","was","wer"],0],
+
+["Das Projekt ___ von der Regierung unterstützt.",["wurde","wird","werden"],0],
+
+["Je mehr Menschen mit dem Fahrrad fahren, ___ sauberer wird die Stadt.",["desto","umso","je"],0],
+
+["Ich habe vor, mich bei einer Umweltorganisation ___ .",["zu engagieren","engagieren","engagiert"],0],
+
+["Sie hat mich gefragt, ob ich ___ Umweltschutz interessiere.",["mich für","mir für","mich an"],0],
+
+["Er tut so, ___ er sich um alles kümmern würde.",["als ob","weil","dass"],0],
+
+["___ ich die Nachrichten gesehen hatte, war ich schockiert.",["Nachdem","Bevor","Während"],0],
+
+["Die sozialen Medien, ___ viele Jugendliche nutzen, haben großen Einfluss.",["die","der","den"],0],
+
+["Die Umwelt muss besser ___ werden.",["geschützt","schützen","schützt"],0],
+
+["Ich weiß nicht, ob ich ___ Demonstration gehen soll.",["auf die","in die","zu der"],0],
+
+["Entweder wir handeln jetzt, ___ es ist zu spät.",["oder","aber","und"],0],
+
+["Das Problem ___ nur gemeinsam gelöst werden.",["kann","kannst","können"],0],
+
+["___ ich jung war, interessierte ich mich nicht für Politik.",["Als","Wenn","Wann"],0],
+
+["Die Regierung hat beschlossen, ___ neue Gesetze einzuführen.",["dass","weil","ob"],0],
+
+["Ich lasse mich von den Nachrichten oft ___ .",["beeinflussen","beeinflusst","beeinflusse"],0],
+
+["Wenn ich mehr Zeit ___, würde ich mich ehrenamtlich engagieren.",["hätte","habe","hatte"],0],
+
+["Meine Freundin, ___ ich oft diskutiere, hat andere Meinungen.",["mit der","mit die","mit dem"],0],
+
+["Die Diskussion ___ gestern im Fernsehen gezeigt.",["wurde","wird","werden"],0]
+
+];
+
+let vorname="";
+let email="";
+
+function starten(){
+
+vorname=document.getElementById("vorname").value.trim();
+email=document.getElementById("email").value.trim();
+
+if(!vorname){
+alert("Bitte Vorname eingeben.");
+return;
+}
+
+if(!email){
+alert("Bitte E-Mail eingeben.");
+return;
+}
+
+if(!document.getElementById("zustimmung").checked){
+alert("Bitte Zustimmung aktivieren.");
+return;
+}
+
+document.getElementById("start").style.display="none";
+document.getElementById("test").style.display="block";
+
+fragenAufbauen();
+
+}
+
+function fragenAufbauen(){
+
+let html="";
+
+fragen.forEach((f,index)=>{
+
+html+=`
+<div class="frage">
+<h3>${index+1}. ${f[0]}</h3>
+`;
+
+f[1].forEach((antwort,aindex)=>{
+
+html+=`
+<label class="option">
+<input type="radio" name="f${index}" value="${aindex}">
+${antwort}
+</label>
+`;
+
+});
+
+html+=`</div>`;
+
+});
+
+document.getElementById("fragen").innerHTML=html;
+
+}
+
+async function auswerten(){
+
+let punkte=0;
+let offen=0;
+
+fragen.forEach((f,index)=>{
+
+const auswahl=document.querySelector(
+'input[name="f'+index+'"]:checked'
+);
+
+if(!auswahl){
+offen++;
+return;
+}
+
+if(Number(auswahl.value)===f[2]){
+punkte++;
+}
+
+});
+
+if(offen>0){
+alert("Bitte alle Fragen beantworten.");
+return;
+}
+
+const prozent=Math.round(
+(punkte/fragen.length)*100
+);
+
+const bestanden=prozent>=70;
+
+document.getElementById("test").style.display="none";
+document.getElementById("ergebnis").style.display="block";
+
+document.getElementById("ergebnis").innerHTML=`
+
+<div class="ergebnis">
+
+<h2>🏆 Ergebnis B1 Test 3</h2>
+
+<h3>${vorname}</h3>
+
+<div class="level">
+${prozent}%
+</div>
+
+<p>
+${punkte} von ${fragen.length} Punkten
+</p>
+
+<div class="${
+bestanden
+?
+"bestanden"
+:
+"nichtbestanden"
+}">
+${bestanden
+?
+"✅ Bestanden"
+:
+"❌ Nicht bestanden"}
+</div>
+
+<p>
+Niveau:
+<strong>B1</strong>
+</p>
+
+${
+bestanden
+?
+"<p>🎉 Sehr gut! Du hast B1 Test 3 bestanden.</p>"
+:
+"<p>📚 Bitte wiederhole die B1-Themen und versuche es erneut.</p>"
+}
+
+<br><br>
+
+<a href="index.html">
+🏠 Zur Startseite
+</a>
+
+</div>
+
+`;
+
+sendenErgebnis(
+punkte,
+prozent,
+bestanden
+);
+
+}
+
+async function sendenErgebnis(
+punkte,
+prozent,
+bestanden
+){
+
+try{
+
+await fetch(
+"https://api.web3forms.com/submit",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json",
+"Accept":"application/json"
+},
+body:JSON.stringify({
+
+access_key:ACCESS_KEY,
+
+subject:
+"B1 Abschlusstest 3 - " + vorname,
+
+Vorname:vorname,
+Email:email,
+
+Test:"B1 Abschlusstest 3",
+
+Punkte:
+punkte + "/" + fragen.length,
+
+Prozent:prozent,
+
+Ergebnis:
+bestanden
+?
+"Bestanden"
+:
+"Nicht bestanden"
+
+})
+}
+);
+
+}catch(error){
+
+console.log(error);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

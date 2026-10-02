@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>B1 Abschlusstest 2</title>
+<style>
+:root{
+--tinte:#1b2a41;
+--papier:#f5f7fa;
+--sonne:#ffc83d;
+--meer:#1f7a8c;
+--weiss:#fff;
+--linie:#d5dce5;
+}
+*{box-sizing:border-box;}
+body{
+margin:0;
+background:var(--papier);
+font-family:"Segoe UI",sans-serif;
+color:var(--tinte);
+}
+.wrap{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+.card{
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 8px 25px rgba(0,0,0,.08);
+margin-bottom:20px;
+}
+h1,h2{margin-top:0;}
+input[type=text],
+input[type=email]{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:2px solid var(--linie);
+border-radius:10px;
+font-size:16px;
+}
+.btn{
+background:var(--tinte);
+color:white;
+border:none;
+padding:14px 25px;
+border-radius:999px;
+cursor:pointer;
+font-weight:bold;
+font-size:16px;
+}
+.btn:hover{background:#101d31;}
+.frage{
+margin-bottom:25px;
+padding-bottom:15px;
+border-bottom:1px solid var(--linie);
+}
+.option{
+display:block;
+margin:8px 0;
+cursor:pointer;
+}
+.progress{
+width:100%;
+height:25px;
+background:#e4eaf2;
+border-radius:999px;
+overflow:hidden;
+margin:20px 0;
+}
+.bar{
+width:100%;
+height:100%;
+background:var(--sonne);
+}
+.ergebnis{text-align:center;}
+.level{
+font-size:42px;
+font-weight:bold;
+margin:15px 0;
+}
+.bestanden{
+color:green;
+font-size:30px;
+font-weight:bold;
+}
+.nichtbestanden{
+color:#c62828;
+font-size:30px;
+font-weight:bold;
+}
+a{
+color:var(--meer);
+text-decoration:none;
+font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card" id="start">
+
+<h1>🚶‍♂️📗 B1 Abschlusstest 2</h1>
+
+<p>
+B1 Abschlussprüfung Variante 2 ⭐⭐
+<br>
+Schwerpunkte: Beruf, Bewerbung, Meinungsäußerung,
+indirekte Rede, Passiv und komplexe Nebensätze.
+</p>
+
+<label>👤 Vorname</label>
+<input type="text" id="vorname">
+
+<label>📧 E-Mail</label>
+<input type="email" id="email">
+
+<label>
+<input type="checkbox" id="zustimmung">
+Ich stimme der Speicherung und Übermittlung meines Ergebnisses zu.
+</label>
+
+<br><br>
+
+<button class="btn" onclick="starten()">
+🚀 Test starten
+</button>
+
+</div>
+
+<div class="card" id="test" style="display:none;">
+
+<h2>📚 B1 Abschlussprüfung</h2>
+
+<div class="progress">
+<div class="bar"></div>
+</div>
+
+<div id="fragen"></div>
+
+<button class="btn" onclick="auswerten()">
+✅ Test auswerten
+</button>
+
+</div>
+
+<div class="card" id="ergebnis" style="display:none;"></div>
+
+</div>
+
+<script>
+
+const ACCESS_KEY="DEIN_WEB3FORMS_ACCESS_KEY";
+
+const fragen=[
+
+["Ich bewerbe mich ___ eine Stelle als Ingenieur.",["um","für","auf"],1],
+
+["Meine Bewerbung ___ gestern abgeschickt.",["wurde","wird","werden"],0],
+
+["Er sagte, er ___ sich gut auf das Gespräch vorbereitet.",["hätte","hat","habe"],0],
+
+["___ ich das Vorstellungsgespräch hatte, war ich sehr nervös.",["Bevor","Nachdem","Während"],1],
+
+["Die Firma, ___ ich arbeite, ist in München.",["bei der","bei die","bei dem"],0],
+
+["Ich hätte gerne mehr Freizeit, ___ ich mehr arbeiten muss.",["obwohl","weil","damit"],0],
+
+["Könnten Sie mir bitte mitteilen, ___ die Stelle noch frei ist?",["ob","dass","weil"],0],
+
+["Wenn ich die Stelle bekomme, ___ ich sofort umziehen.",["werde","würde","wird"],0],
+
+["Der Kollege, ___ ich das Projekt leite, ist heute krank.",["mit dem","mit den","mit der"],0],
+
+["Ich habe mich entschieden, ___ ich den Job wechsle.",["dass","weil","ob"],0],
+
+["Das Meeting ___ auf nächste Woche verschoben.",["wurde","wird","werden"],0],
+
+["Sie hat mich gefragt, ob ich ___ der Besprechung teilnehmen kann.",["an","bei","auf"],0],
+
+["Je länger ich in Deutschland lebe, ___ besser verstehe ich die Kultur.",["desto","umso","je"],0],
+
+["Ich habe vor, nächstes Jahr eine Weiterbildung ___ .",["zu machen","machen","gemacht"],0],
+
+["Er tut so, ___ er alles über das Projekt wüsste.",["als ob","weil","dass"],0],
+
+["___ des Stresses im Büro brauche ich Urlaub.",["Wegen","Trotz","Während"],0],
+
+["Die Rechnung muss bis Freitag ___ werden.",["bezahlt","bezahlen","bezahlt"],0],
+
+["Ich weiß nicht, ob ich die Stelle ___ soll.",["annehmen","annehmen","angenommen"],0],
+
+["Meine Kollegin, ___ ich sehr schätze, kündigt leider.",["die","der","den"],0],
+
+["Wenn ich das früher gewusst ___, hätte ich mich anders beworben.",["hätte","wäre","würde"],0],
+
+["Das Projekt ___ bis Ende des Monats abgeschlossen sein.",["muss","musst","müssen"],0],
+
+["Entweder ich bleibe in dieser Firma, ___ ich suche etwas Neues.",["oder","aber","und"],0],
+
+["Nachdem ich die Prüfung ___ hatte, feierte ich.",["bestanden","bestehen","bestehe"],0],
+
+["Ich lasse meine Bewerbung von einem Freund ___ .",["korrigieren","korrigiert","korrigiere"],0],
+
+["___ ich das Angebot bekam, war ich überrascht.",["Als","Wenn","Wann"],0]
+
+];
+
+let vorname="";
+let email="";
+
+function starten(){
+
+vorname=document.getElementById("vorname").value.trim();
+email=document.getElementById("email").value.trim();
+
+if(!vorname){
+alert("Bitte Vorname eingeben.");
+return;
+}
+
+if(!email){
+alert("Bitte E-Mail eingeben.");
+return;
+}
+
+if(!document.getElementById("zustimmung").checked){
+alert("Bitte Zustimmung aktivieren.");
+return;
+}
+
+document.getElementById("start").style.display="none";
+document.getElementById("test").style.display="block";
+
+fragenAufbauen();
+
+}
+
+function fragenAufbauen(){
+
+let html="";
+
+fragen.forEach((f,index)=>{
+
+html+=`
+<div class="frage">
+<h3>${index+1}. ${f[0]}</h3>
+`;
+
+f[1].forEach((antwort,aindex)=>{
+
+html+=`
+<label class="option">
+<input type="radio" name="f${index}" value="${aindex}">
+${antwort}
+</label>
+`;
+
+});
+
+html+=`</div>`;
+
+});
+
+document.getElementById("fragen").innerHTML=html;
+
+}
+
+async function auswerten(){
+
+let punkte=0;
+let offen=0;
+
+fragen.forEach((f,index)=>{
+
+const auswahl=document.querySelector(
+'input[name="f'+index+'"]:checked'
+);
+
+if(!auswahl){
+offen++;
+return;
+}
+
+if(Number(auswahl.value)===f[2]){
+punkte++;
+}
+
+});
+
+if(offen>0){
+alert("Bitte alle Fragen beantworten.");
+return;
+}
+
+const prozent=Math.round(
+(punkte/fragen.length)*100
+);
+
+const bestanden=prozent>=70;
+
+document.getElementById("test").style.display="none";
+document.getElementById("ergebnis").style.display="block";
+
+document.getElementById("ergebnis").innerHTML=`
+
+<div class="ergebnis">
+
+<h2>🏆 Ergebnis B1 Test 2</h2>
+
+<h3>${vorname}</h3>
+
+<div class="level">
+${prozent}%
+</div>
+
+<p>
+${punkte} von ${fragen.length} Punkten
+</p>
+
+<div class="${
+bestanden
+?
+"bestanden"
+:
+"nichtbestanden"
+}">
+${bestanden
+?
+"✅ Bestanden"
+:
+"❌ Nicht bestanden"}
+</div>
+
+<p>
+Niveau:
+<strong>B1</strong>
+</p>
+
+${
+bestanden
+?
+"<p>🎉 Sehr gut! Du hast B1 Test 2 bestanden.</p>"
+:
+"<p>📚 Bitte übe weiter und versuche den Test erneut.</p>"
+}
+
+<br><br>
+
+<a href="index.html">
+🏠 Zur Startseite
+</a>
+
+</div>
+
+`;
+
+sendenErgebnis(
+punkte,
+prozent,
+bestanden
+);
+
+}
+
+async function sendenErgebnis(
+punkte,
+prozent,
+bestanden
+){
+
+try{
+
+await fetch(
+"https://api.web3forms.com/submit",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json",
+"Accept":"application/json"
+},
+body:JSON.stringify({
+
+access_key:ACCESS_KEY,
+
+subject:
+"B1 Abschlusstest 2 - " + vorname,
+
+Vorname:vorname,
+Email:email,
+
+Test:"B1 Abschlusstest 2",
+
+Punkte:
+punkte + "/" + fragen.length,
+
+Prozent:prozent,
+
+Ergebnis:
+bestanden
+?
+"Bestanden"
+:
+"Nicht bestanden"
+
+})
+}
+);
+
+}catch(error){
+
+console.log(error);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

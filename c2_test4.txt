@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C2 Abschlusstest 4</title>
+<style>
+:root{
+--tinte:#1b2a41;
+--papier:#f5f7fa;
+--sonne:#ffc83d;
+--meer:#1f7a8c;
+--weiss:#fff;
+--linie:#d5dce5;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--papier);font-family:"Segoe UI",sans-serif;color:var(--tinte);}
+.wrap{max-width:900px;margin:auto;padding:20px;}
+.card{background:white;padding:30px;border-radius:20px;box-shadow:0 8px 25px rgba(0,0,0,.08);margin-bottom:20px;}
+h1,h2{margin-top:0;}
+input[type=text],input[type=email]{width:100%;padding:12px;margin-bottom:15px;border:2px solid var(--linie);border-radius:10px;font-size:16px;}
+.btn{background:var(--tinte);color:white;border:none;padding:14px 25px;border-radius:999px;cursor:pointer;font-weight:bold;font-size:16px;}
+.btn:hover{background:#101d31;}
+.frage{margin-bottom:25px;padding-bottom:15px;border-bottom:1px solid var(--linie);}
+.option{display:block;margin:8px 0;cursor:pointer;}
+.progress{width:100%;height:25px;background:#e4eaf2;border-radius:999px;overflow:hidden;margin:20px 0;}
+.bar{width:100%;height:100%;background:var(--sonne);}
+.ergebnis{text-align:center;}
+.level{font-size:42px;font-weight:bold;margin:15px 0;}
+.bestanden{color:green;font-size:30px;font-weight:bold;}
+.nichtbestanden{color:#c62828;font-size:30px;font-weight:bold;}
+a{color:var(--meer);text-decoration:none;font-weight:bold;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<div class="card" id="start">
+
+<h1>🏛️📕 C2 Abschlusstest 4</h1>
+
+<p>
+C2 Abschlussprüfung Variante 4 ⭐⭐⭐⭐
+<br>
+Schwerpunkte: literarische Sprache, Stilanalyse,
+Interpretation, Rhetorik und gehobener Ausdruck.
+</p>
+
+<label>👤 Vorname</label>
+<input type="text" id="vorname">
+
+<label>📧 E-Mail</label>
+<input type="email" id="email">
+
+<label>
+<input type="checkbox" id="zustimmung">
+Ich stimme der Speicherung und Übermittlung meines Ergebnisses zu.
+</label>
+
+<br><br>
+
+<button class="btn" onclick="starten()">
+🚀 Test starten
+</button>
+
+</div>
+
+<div class="card" id="test" style="display:none;">
+
+<h2>📚 C2 Abschlussprüfung</h2>
+
+<div class="progress">
+<div class="bar"></div>
+</div>
+
+<div id="fragen"></div>
+
+<button class="btn" onclick="auswerten()">
+✅ Test auswerten
+</button>
+
+</div>
+
+<div class="card" id="ergebnis" style="display:none;"></div>
+
+</div>
+
+<script>
+
+const ACCESS_KEY="DEIN_WEB3FORMS_ACCESS_KEY";
+
+const fragen=[
+
+["Der Dichter ___ in seinem Werk die Vergänglichkeit allen Seins.",["thematisiert","thematisiert","thematisiert"],0],
+
+["Die Sprache des Romans ist von einer ___ Schlichtheit.",["ergreifenden","ergriffenen","ergreifende"],0],
+
+["Der Erzähler ___ sich in Andeutungen.",["ergeht","ergeht sich","ergeht"],1],
+
+["Das Werk ist in einer ___ Sprache verfasst.",["gehobenen","erhabenen","hohen"],0],
+
+["Die Metapher ___ das Unaussprechliche.",["umschreibt","beschreibt","verschreibt"],0],
+
+["Der Autor ___ eine düstere Atmosphäre.",["evoziert","provoziert","invoniert"],0],
+
+["Die Figur ___ im Laufe des Romans eine Wandlung.",["durchläuft","durchlebt","durchmacht"],0],
+
+["Der Text ___ sich einer eindeutigen Interpretation.",["entzieht","entzieht sich","entzieht"],1],
+
+["Die Erzählung ist von einer ___ Melancholie durchzogen.",["tiefen","tiefe","tiefer"],0],
+
+["Der Dichter ___ seine Kindheit in poetischen Bildern.",["beschwört","beschwört","beschwört"],0],
+
+["Das Motiv ___ sich wie ein roter Faden durch das Werk.",["zieht","zieht sich","zieht"],1],
+
+["Die Sprache ___ zwischen Pathos und Ironie.",["pendelt","schwankt","wechselt"],0],
+
+["Der Erzähler ___ das Geschehen aus der Distanz.",["betrachtet","betrachtet","betrachtet"],0],
+
+["Die Handlung ___ in einer fiktiven Stadt.",["spielt","findet statt","ereignet sich"],0],
+
+["Der Roman ___ ein Panorama der Gesellschaft.",["entwirft","wirft","schafft"],0],
+
+["Die Figuren sind psychologisch ___ gezeichnet.",["fein","tief","scharf"],0],
+
+["Der Stil ist von einer ___ Eleganz.",["spröden","spröde","spröder"],0],
+
+["Die Erzählung ___ in einem offenen Ende.",["gipfelt","mündet","endet"],1],
+
+["Die Symbolik ___ vielfältige Deutungen zu.",["lässt","erlaubt","bietet"],0],
+
+["Der Dichter ___ sich gegen gesellschaftliche Konventionen.",["auflehnt","lehnt sich auf","auflehnt sich"],1],
+
+["Die Sprache ___ eine eigentümliche Sogwirkung.",["entfaltet","entwickelt","entfesselt"],0],
+
+["Der Text ___ den Leser vor Rätsel.",["stellt","setzt","bringt"],0],
+
+["Das Werk ___ zu den bedeutendsten der Epoche.",["zählt","gehört","zählt"],0],
+
+["Die Interpretation ___ unterschiedliche Zugänge.",["eröffnet","öffnet","erlaubt"],0],
+
+["Der Autor ___ eine unverwechselbare Stimme.",["besitzt","hat","verfügt über"],0]
+
+];
+
+let vorname="";
+let email="";
+
+function starten(){
+vorname=document.getElementById("vorname").value.trim();
+email=document.getElementById("email").value.trim();
+if(!vorname){alert("Bitte Vorname eingeben.");return;}
+if(!email){alert("Bitte E-Mail eingeben.");return;}
+if(!document.getElementById("zustimmung").checked){alert("Bitte Zustimmung aktivieren.");return;}
+document.getElementById("start").style.display="none";
+document.getElementById("test").style.display="block";
+fragenAufbauen();
+}
+
+function fragenAufbauen(){
+let html="";
+fragen.forEach((f,index)=>{
+html+=`<div class="frage"><h3>${index+1}. ${f[0]}</h3>`;
+f[1].forEach((antwort,aindex)=>{
+html+=`<label class="option"><input type="radio" name="f${index}" value="${aindex}">${antwort}</label>`;
+});
+html+=`</div>`;
+});
+document.getElementById("fragen").innerHTML=html;
+}
+
+async function auswerten(){
+let punkte=0;
+let offen=0;
+fragen.forEach((f,index)=>{
+const auswahl=document.querySelector('input[name="f'+index+'"]:checked');
+if(!auswahl){offen++;return;}
+if(Number(auswahl.value)===f[2]){punkte++;}
+});
+if(offen>0){alert("Bitte alle Fragen beantworten.");return;}
+const prozent=Math.round((punkte/fragen.length)*100);
+const bestanden=prozent>=70;
+document.getElementById("test").style.display="none";
+document.getElementById("ergebnis").style.display="block";
+document.getElementById("ergebnis").innerHTML=`
+<div class="ergebnis">
+<h2>🏆 Ergebnis C2 Test 4</h2>
+<h3>${vorname}</h3>
+<div class="level">${prozent}%</div>
+<p>${punkte} von ${fragen.length} Punkten</p>
+<div class="${bestanden?"bestanden":"nichtbestanden"}">
+${bestanden?"✅ Bestanden":"❌ Nicht bestanden"}
+</div>
+<p>Niveau: <strong>C2</strong></p>
+${bestanden?"<p>🎉 Sehr gut! Du hast C2 Test 4 bestanden.</p>":"<p>📚 Bitte wiederhole die C2-Themen und versuche es erneut.</p>"}
+<br><br>
+<a href="index.html">🏠 Zur Startseite</a>
+</div>
+`;
+sendenErgebnis(punkte,prozent,bestanden);
+}
+
+async function sendenErgebnis(punkte,prozent,bestanden){
+try{
+await fetch("https://api.web3forms.com/submit",{
+method:"POST",
+headers:{"Content-Type":"application/json","Accept":"application/json"},
+body:JSON.stringify({
+access_key:ACCESS_KEY,
+subject:"C2 Abschlusstest 4 - "+vorname,
+Vorname:vorname,
+Email:email,
+Test:"C2 Abschlusstest 4",
+Punkte:punkte+"/"+fragen.length,
+Prozent:prozent,
+Ergebnis:bestanden?"Bestanden":"Nicht bestanden"
+})
+});
+}catch(error){console.log(error);}
+}
+
+</script>
+
+</body>
+</html>
