@@ -331,4 +331,161 @@ const T = {
     f_nachricht:"Ujumbe",f_nachricht_ph:"k.m. jioni, wikendi ...",
     f_datenschutz:"Nakubali data yangu ichakatwe. *",f_senden:"🚀 Tuma usajili",
     f_imp:"Taarifa za kisheria",f_dat:"Ulinzi wa data",m_abbrechen:"Ghairi",m_freischalten:"Fungua",
-   
+    premium_gesperrt:"🔒 Mitihani 2–5 ya {n} ni Premium.",premium_btn:"Weka msimbo",
+    premium_ok:"✅ Premium ya {n} imefunguliwa.",
+    zert_bereich:"🎓 Umefaulu {n}? Weka msimbo wa cheti:",zert_btn:"Onyesha cheti",
+    zert_fehler:"Msimbo si sahihi.",zert_ok:"✅ Cheti kimefunguliwa!",
+    zert_oeffnen:"🎓 Fungua cheti cha BOPI {n}",
+    anm_gesendet:"✅ Usajili umetumwa.",anm_fehler:"❌ Kutuma kimeshindikana.",anm_laeuft:"Inatuma ..."
+  }
+};
+
+let L = "de", aktuellesNiveau = null;
+const $ = id => document.getElementById(id);
+const t = k => (T[L] && T[L][k]) || T.de[k] || k;
+
+function ladeFreischaltungen(){
+  try { return JSON.parse(localStorage.getItem("premium_freigeschaltet") || "[]"); }
+  catch(e) { return []; }
+}
+function speichereFreischaltung(code){
+  const liste = ladeFreischaltungen();
+  if (!liste.includes(code)) { liste.push(code); localStorage.setItem("premium_freigeschaltet", JSON.stringify(liste)); }
+}
+function istFreigeschaltet(code){ return ladeFreischaltungen().includes(code); }
+
+function render(){
+  const container = $("niveauListe");
+  container.innerHTML = "";
+  niveaus.forEach(n => {
+    const frei = istFreigeschaltet(n.code);
+    const block = document.createElement("div");
+    block.className = "niveau-block";
+    block.innerHTML = `
+      <div class="niveau-kopf">
+        <div class="niveau-titel">
+          <span class="niveau-badge">${n.emoji} ${n.code}</span>
+          <span class="niveau-beschreibung">${n.b[L] || n.b.de}</span>
+        </div>
+      </div>`;
+    const reihe = document.createElement("div");
+    reihe.className = "test-reihe";
+    for (let i = 1; i <= 5; i++) {
+      const a = document.createElement("a");
+      a.textContent = n.code + " " + t("test") + " " + i;
+      a.className = "test-link";
+      const datei = n.code.toLowerCase() + "_test" + i + ".html";
+      if (i === 1) { a.classList.add("erst-test"); a.href = datei; }
+      else if (frei) { a.classList.add("freigeschaltet"); a.href = datei; }
+      else {
+        a.classList.add("gesperrt");
+        a.href = "javascript:void(0)";
+        a.addEventListener("click", e => { e.preventDefault(); oeffneModal(n.code); });
+      }
+      reihe.appendChild(a);
+    }
+    block.appendChild(reihe);
+    const hb = document.createElement("div");
+    hb.className = "hinweis-box" + (frei ? " gruen" : "");
+    hb.innerHTML = frei
+      ? t("premium_ok").replace("{n}", n.code)
+      : t("premium_gesperrt").replace("{n}", n.code) + ` <button onclick="oeffneModal('${n.code}')">${t("premium_btn")}</button>`;
+    block.appendChild(hb);
+    const z = document.createElement("div");
+    z.className = "zertifikat-bereich";
+    z.id = "zert-bereich-" + n.code;
+    z.innerHTML = `
+      <p>${t("zert_bereich").replace("{n}", n.code)}</p>
+      <input type="text" id="zert-code-${n.code}" placeholder="BOPI-${n.code}-..." autocomplete="off">
+      <button onclick="zertifikatFreischalten('${n.code}')">${t("zert_btn")}</button>
+      <p class="fehler" id="zert-fehler-${n.code}">${t("zert_fehler")}</p>`;
+    block.appendChild(z);
+    container.appendChild(block);
+  });
+}
+
+function oeffneModal(code){
+  aktuellesNiveau = code;
+  $("modalTitel").textContent = "Premium " + code;
+  $("modalText").textContent = "Code:";
+  $("modalFehler").style.display = "none";
+  $("codeEingabe").value = "";
+  $("modal").classList.add("offen");
+  setTimeout(() => $("codeEingabe").focus(), 100);
+}
+function modalSchliessen(){ $("modal").classList.remove("offen"); aktuellesNiveau = null; }
+function codePruefen(){
+  const e = $("codeEingabe").value.trim().toUpperCase();
+  const w = (PREMIUM_CODES[aktuellesNiveau] || "").toUpperCase();
+  if (e && e === w) {
+    speichereFreischaltung(aktuellesNiveau);
+    modalSchliessen();
+    render();
+    alert(t("premium_ok").replace("{n}", aktuellesNiveau));
+  } else {
+    $("modalFehler").style.display = "block";
+  }
+}
+$("codeEingabe").addEventListener("keydown", e => { if (e.key === "Enter") codePruefen(); });
+$("modal").addEventListener("click", e => { if (e.target.id === "modal") modalSchliessen(); });
+
+function zertifikatFreischalten(code){
+  const e = $("zert-code-" + code).value.trim().toUpperCase();
+  const w = (ZERTIFIKAT_CODES[code] || "").toUpperCase();
+  const b = $("zert-bereich-" + code);
+  const f = $("zert-fehler-" + code);
+  if (e && e === w) {
+    b.innerHTML = `<p style="color:green;">${t("zert_ok")}</p>
+      <a class="btn btn-sonne" href="zertifikat_${code.toLowerCase()}.html">${t("zert_oeffnen").replace("{n}", code)}</a>`;
+  } else {
+    f.style.display = "block";
+  }
+}
+
+function setLang(l){
+  if (!T[l]) l = "de";
+  L = l;
+  document.documentElement.lang = l;
+  document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => { el.placeholder = t(el.dataset.i18nPlaceholder); });
+  document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === l));
+  render();
+  try { localStorage.setItem("sprache", l); } catch(e){}
+}
+document.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+try { const g = localStorage.getItem("sprache"); if (g && g !== "de") setLang(g); } catch(e){}
+
+$("anmeldungForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const s = $("anmeldungStatus");
+  s.textContent = t("anm_laeuft");
+  s.style.color = "var(--text-gedaempft)";
+  const daten = {
+    access_key: ACCESS_KEY,
+    from_name: "BOPI Sprachschule",
+    subject: "Neue Anmeldung: " + $("vorname").value + " " + $("nachname").value,
+    Zielgruppe: $("zielgruppe").value,
+    Vorname: $("vorname").value,
+    Nachname: $("nachname").value,
+    Email: $("email").value,
+    Telefon: $("telefon").value,
+    Niveau: $("niveau").value,
+    Nachricht: $("nachricht").value
+  };
+  try {
+    const r = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {"Content-Type":"application/json","Accept":"application/json"},
+      body: JSON.stringify(daten)
+    });
+    const j = await r.json();
+    if (j.success) { s.textContent = t("anm_gesendet"); s.style.color = "green"; $("anmeldungForm").reset(); }
+    else { s.textContent = t("anm_fehler"); s.style.color = "#c62828"; }
+  } catch(err) { s.textContent = t("anm_fehler"); s.style.color = "#c62828"; }
+});
+
+render();
+</script>
+
+</body>
+</html>
